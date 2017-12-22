@@ -8,7 +8,6 @@ import React, { Component } from 'react'
 import { Platform, StyleSheet, Text, View, StatusBar } from 'react-native'
 
 import { StackNavigator, TabNavigator } from 'react-navigation'
-
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
 import Dashboard from './components/pages/dashboard/dashboard'
@@ -28,7 +27,7 @@ function changeTabTitle (op) {
       TABSTATE = '办事大厅'
       HEADER_INVISIBLE = true
     } else {
-      TABSTATE = ''
+      TABSTATE = '我的'
       HEADER_INVISIBLE = false
     }
   }
@@ -70,8 +69,11 @@ const Maintab = TabNavigator({
     navigationOptions: {
       tabBarLabel: '任务',
       tabBarIcon: ({ tintColor, focused }) => (
-        <Ionicons name={focused ? 'ios-list-box' : 'ios-list-box-outline'} size={26} style={{ color: '#8fb9fd' }} />
+        <Ionicons name={focused ? 'ios-list-box' : 'ios-list-box-outline'} size={26} style={focused ? { color: '#8fb9fd' } : {color: '#7b7b7d'}} />
       ),
+      labelStyle: {
+        fontSize: 20
+      },
       tabBarOnPress: ({scene, jumpToIndex}) => {
         changeTabTitle(1)
         jumpToIndex(scene.index)
@@ -83,8 +85,11 @@ const Maintab = TabNavigator({
     navigationOptions: {
       tabBarLabel: '办事大厅',
       tabBarIcon: ({ tintColor, focused }) => (
-        <Ionicons name={focused ? 'ios-home' : 'ios-home-outline'} size={26} style={{ color: '#8fb9fd' }} />
+        <Ionicons name={focused ? 'ios-list-box' : 'ios-list-box-outline'} size={26} style={focused ? { color: '#8fb9fd' } : {color: '#7b7b7d'}} />
       ),
+      labelStyle: {
+        fontSize: 20
+      },
       tabBarOnPress: ({scene, jumpToIndex}) => {
         changeTabTitle(2)
         jumpToIndex(scene.index)
@@ -97,7 +102,7 @@ const Maintab = TabNavigator({
     navigationOptions: {
       tabBarLabel: '我的',
       tabBarIcon: ({ tintColor, focused }) => (
-        <Ionicons name={focused ? 'ios-person' : 'ios-person-outline'} size={26} style={{ color: '#8fb9fd' }} />
+        <Ionicons name={focused ? 'ios-person' : 'ios-person-outline'} size={26}  style={focused ? { color: '#8fb9fd' } : {color: '#7b7b7d'}}/>
       ),
       tabBarOnPress: ({scene, jumpToIndex}) => {
         changeTabTitle(3)
@@ -105,6 +110,15 @@ const Maintab = TabNavigator({
       }
     }
   }
+}, {
+  tabBarOptions: {
+    labelStyle: {
+      fontSize: 13,
+      paddingBottom: 2
+    },
+  activeTintColor: '#8fb9fd',
+  inactiveTintColor: '#7b7b7d',
+}
 })
 
 const Main = StackNavigator({
@@ -117,11 +131,15 @@ const Main = StackNavigator({
           headerMode: 'none',
           headerTintColor: 'white',
           headerStyle: {
-          backgroundColor: '#8fb9fd', borderBottomWidth: 0}
+            backgroundColor: '#8fb9fd'
+          },
+          headerTitleStyle: {
+            fontSize: 22
+          }
         }
       } else {
         return {
-          header: null,
+          header: null
         }
       }
     }
@@ -134,19 +152,26 @@ const Main = StackNavigator({
         headerTintColor: 'white',
         headerStyle: {
           backgroundColor: '#8fb9fd', borderBottomWidth: 0
+        },
+        headerTitleStyle: {
+          fontSize: 22
         }
       }
     }
   }
 })
 
-export default function App () {
-  return (
-    <View style={styles.container}>
-      <StatusBar barStyle='light-content' />
-      <Main />
-    </View>
-  )
+export default class App extends Component {
+
+  render () {
+    return (
+      <View style={styles.container}>
+        <StatusBar barStyle='light-content' />
+        <Main />
+      </View>
+    )
+  }
+
 }
 
 const styles = StyleSheet.create({

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Platform, StyleSheet, Text, View, Image, TouchableOpacity, TouchableHighlight } from 'react-native'
+import { Platform, StyleSheet, Text, View, Image, TouchableOpacity, TouchableHighlight, ScrollView } from 'react-native'
 
 import { StackNavigator, TabNavigator } from 'react-navigation'
 import Ionicons from 'react-native-vector-icons/Ionicons'
@@ -64,6 +64,7 @@ const styles = StyleSheet.create({
     borderColor: 'red',
     borderWidth: WIDTH,
     flex: 1,
+    backgroundColor: '#fafafa',
   },
   headerInfo: {
     borderColor: 'green',
@@ -115,7 +116,7 @@ const styles = StyleSheet.create({
   cellsContainer: {
     borderColor: '#dedede',
     borderWidth: 0.5,
-    marginTop: 20,
+    marginBottom: 20,
     paddingBottom: 1,
   },
 
