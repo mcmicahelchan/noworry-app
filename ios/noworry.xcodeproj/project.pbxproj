@@ -1310,6 +1310,7 @@
 					"-ObjC",
 					"-lc++",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.jmc.noworry;
 				PRODUCT_NAME = noworry;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1334,6 +1335,7 @@
 					"-ObjC",
 					"-lc++",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.jmc.noworry;
 				PRODUCT_NAME = noworry;
 				VERSIONING_SYSTEM = "apple-generic";
 			};

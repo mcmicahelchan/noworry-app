@@ -7,23 +7,21 @@ import * as Progress from 'react-native-progress';
 
 const WIDTH = 0
 
-export default function draft(props) {
-    const { state, type, process, navigation, linkPage } = props
+export default function option(props) {
+    const { businessType, icon, navigation, linkPage } = props
 
     return (
-        <TouchableOpacity style={styles.draftContainer} onPress={() => navigation.navigate(linkPage)} activeOpacity={0.7}>
-            <Text style={styles.draftType}>{type}</Text>
-            <Text style={styles.draftState}>{state}</Text>
-            <Progress.Bar progress={process} width={100} color='#8fb9fd' borderWidth={0} unfilledColor='#e3e4e5' />
-
+        <TouchableOpacity style={[styles.draftContainer]} onPress={() => navigation.navigate(linkPage)} activeOpacity={0.7}>
+            <Ionicons name={icon} size={34} style={{ color: '#8fb9fd' }} />
+            <Text style={styles.draftType}>{businessType}</Text>
         </TouchableOpacity>
     )
 }
 
 const styles = StyleSheet.create({
     draftContainer: {
-        height: 87,
-        width: 117,
+        height: 90,
+        width: 135,
         borderRadius: 8,
         shadowColor: 'grey',
         shadowOffset: { width: 1, height: 1 },
@@ -32,23 +30,16 @@ const styles = StyleSheet.create({
         elevation: 1,
         borderWidth: 0,
         borderColor: 'white',
-        marginLeft: 8,
-        marginRight: 8,
         alignItems: 'center',
+        justifyContent:'center',
         padding: 10,
+        margin: 10,
     },
     draftType: {
-        fontSize: 25,
-        width: 100,
+        fontSize: 18,
         fontWeight: 'bold',
-        marginBottom: 12,
+        marginTop: 8,
         color: '#64708e',
     },
-    draftState: {
-        fontSize: 16,
-        width: 100,
-        marginBottom: 15,
-        color: '#9a9b9c',
-    }
 
 })

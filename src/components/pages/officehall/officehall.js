@@ -7,6 +7,7 @@ import Swiper from 'react-native-swiper'
 import * as Progress from 'react-native-progress'
 
 import Draft from './draft'
+import Option from './option'
 
 const WIDTH = 0
 
@@ -24,7 +25,9 @@ export default class officehall extends Component {
   render () {
     console.log('good')
     return (
-      <ScrollView style={styles.container} contentContainerStyle={{alignItems: 'center', justifyContent: 'flex-start'}}>
+      <ScrollView style={styles.container} 
+      contentContainerStyle={{alignItems: 'center', justifyContent: 'flex-start'}}
+      showsVerticalScrollIndicator={false}>
         <TouchableOpacity style={styles.searchBar} activeOpacity={1} >
           <Ionicons name={'ios-search'} size={18} style={{ color: '#dedede', marginTop: 2,marginRight: 6 }} />
           <Text style={styles.searchText}>搜索</Text>
@@ -33,10 +36,10 @@ export default class officehall extends Component {
           <Swiper style={styles.wrapper} 
           showsButtons={false} 
           showsPagination={true} 
-          height={125} width={width - 16} 
+          height={78} width={width - 16} 
           activeDotStyle={{height:3,width:6}} 
           dotStyle={{height:2,width:4}} 
-          paginationStyle={{position:'absolute', bottom: 6}}
+          paginationStyle={{position:'absolute', bottom: 2}}
           removeClippedSubviews={false}>
             <View style={styles.slide1}>
               <Image source={require('../../../../app-assets/officehall/banner_1.png')} style={styles.pic} />
@@ -71,7 +74,18 @@ export default class officehall extends Component {
           
            
         </View>
-       
+        <View style={styles.optionsContainer}>
+          <View style={styles.draftboxHeaderContainer}>
+            <Text style={styles.draftboxHeaderText}>业务选择</Text>
+          </View>
+          <View style={styles.businessContainer}>
+            <Option style={styles.option} navigation={this.props.navigation} businessType='交管业务' icon='ios-search' linkPage='error'/> 
+            <Option style={styles.option} navigation={this.props.navigation} businessType='出入境业务' icon='ios-search' linkPage='error' /> 
+            <Option style={styles.option} navigation={this.props.navigation} businessType='户政业务' icon='ios-search' linkPage='error' /> 
+            <Option style={styles.option} navigation={this.props.navigation} businessType='监管业务' icon='ios-search' linkPage='error' /> 
+          </View>
+
+        </View>
 
       </ScrollView>
     )
@@ -115,7 +129,7 @@ const styles = StyleSheet.create({
   },
   pic: {
     width: width - 16,
-    height: 125,
+    height: 78,
   },
   swipeContainer: {
     borderWidth: WIDTH,
@@ -131,9 +145,9 @@ const styles = StyleSheet.create({
     borderWidth: WIDTH,
     borderColor: 'black',
     height: 145,
-    marginTop: 12,
     backgroundColor: '#FFFFFF',
     width: width - 16,
+    alignItems: 'center',
     // shadowColor: '#000',
     // shadowOffset: { width: 0, height: 0.2 },
     // shadowOpacity: 0.15,
@@ -161,7 +175,31 @@ const styles = StyleSheet.create({
     borderWidth: WIDTH,
     borderColor: 'red',
     height:80,
+    width: width - 30,
   },
+  optionsContainer: {
+    borderWidth: WIDTH,
+    borderColor: 'black',
+    flex: 1,
+    backgroundColor: '#FFFFFF',
+    width: width - 16,
+    alignItems: 'center',
+    // shadowColor: '#000',
+    // shadowOffset: { width: 0, height: 0.2 },
+    // shadowOpacity: 0.15,
+    // shadowRadius: 2,
+    // elevation: 1,
+  },
+  businessContainer: {
+    borderWidth: WIDTH,
+    borderColor: 'red',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+  },
+  option: {
+    marginTop: 20,
+  }
   
 
 })
