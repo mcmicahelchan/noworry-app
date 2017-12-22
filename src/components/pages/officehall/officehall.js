@@ -30,15 +30,22 @@ export default class officehall extends Component {
           <Text style={styles.searchText}>搜索</Text>
         </TouchableOpacity>
         <View style={styles.swipeContainer}>
-          <Swiper style={styles.wrapper} showsButtons={false} showsPagination={true} height={125} width={width - 16} activeDotStyle={{height:3,width:6}} dotStyle={{height:2,width:4}} paginationStyle={{position:'absolute', bottom: 6}}>
+          <Swiper style={styles.wrapper} 
+          showsButtons={false} 
+          showsPagination={true} 
+          height={125} width={width - 16} 
+          activeDotStyle={{height:3,width:6}} 
+          dotStyle={{height:2,width:4}} 
+          paginationStyle={{position:'absolute', bottom: 6}}
+          removeClippedSubviews={false}>
             <View style={styles.slide1}>
-              <Image source={require('../../../app-assets/officehall/banner_1.png')} style={styles.pic} />
+              <Image source={require('../../../../app-assets/officehall/banner_1.png')} style={styles.pic} />
             </View>
             <View style={styles.slide2}>
-              <Image source={require('../../../app-assets/officehall/banner_2.png')} style={styles.pic} />
+              <Image source={require('../../../../app-assets/officehall/banner_2.png')} style={styles.pic} />
             </View>
             <View style={styles.slide3}>
-              <Image source={require('../../../app-assets/officehall/banner_3.png')} style={styles.pic} />
+              <Image source={require('../../../../app-assets/officehall/banner_3.png')} style={styles.pic} />
             </View>
           </Swiper>
         </View>

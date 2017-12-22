@@ -10,10 +10,10 @@ import { Platform, StyleSheet, Text, View, StatusBar } from 'react-native'
 import { StackNavigator, TabNavigator } from 'react-navigation'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
-import Dashboard from './components/pages/dashboard/dashboard'
-import Mine from './components/pages/mine/mine'
-import Officehall from './components/pages/officehall/officehall'
-import Error from './components/pages/error'
+import Dashboard from './src/components/pages/dashboard/dashboard'
+import Mine from './src/components/pages/mine/mine'
+import Officehall from './src/components/pages/officehall/officehall'
+import Error from './src/components/pages/error'
 
 let TABSTATE = '任务'
 let HEADER_INVISIBLE = true

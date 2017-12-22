@@ -1,42 +1,43 @@
 import React, { Component } from 'react'
 import { Platform, StyleSheet, Text, View, Image, TouchableOpacity, TouchableHighlight, ScrollView } from 'react-native'
-
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux';
 import { StackNavigator, TabNavigator } from 'react-navigation'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
+import { modify } from '../../../actions/userActions'
 import Cell from './cell'
 
 const WIDTH = 0
 
-export default class mine extends Component {
+
+class mine extends Component {
   constructor () {
     super()
     this.state = {
-      text: 'good',
-      username: '美丽的用户',
-      userPhone: '13900001234',
-      userFavict: '../../../app-assets/mine/fav.png'
+      userFavict: '../../../../app-assets/mine/fav.png'
     }
   }
 
   render () {
-    console.log(this.props.navigation)
+    
+    const {user, modify} = this.props
     const { username, userPhone, userFavict } = this.state
     return (
       <View style={styles.container}>
         <View style={styles.headerInfo}>
           <View style={styles.infoContainer}>
-            <Image source={require('../../../app-assets/mine/fav.png')} style={styles.fav} />
+            <Image source={require('../../../../app-assets/mine/fav.png')} style={styles.fav} />
             <View style={styles.infoText}>
               <Text style={styles.name}>
-                {username}
+                {user.name}
               </Text>
               <Text style={styles.phone}>
-                {userPhone}
+                {user.phone}
               </Text>
             </View>
           </View>
-          <TouchableOpacity style={styles.btdContainer} onPress={() =>this.props.navigation.navigate('error')}>
+          <TouchableOpacity style={styles.btdContainer} onPress={() => modify('可爱猪', '1234567890')}>
             <Ionicons name={'md-create'} size={26} style={{ color: 'white' }} />
           </TouchableOpacity>
         </View>
@@ -121,3 +122,21 @@ const styles = StyleSheet.create({
   },
 
 })
+
+
+function mapStateToProps(state) {
+  return {
+    user: state.user,
+  };
+}
+
+function mapDispatchProps(dispatch) {
+  return {
+    modify: bindActionCreators(modify, dispatch),
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchProps
+)(mine)
