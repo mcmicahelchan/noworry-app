@@ -21,7 +21,7 @@ export default function option(props) {
 const styles = StyleSheet.create({
     draftContainer: {
         height: 90,
-        width: 135,
+        width: 140,
         borderRadius: 8,
         shadowColor: 'grey',
         shadowOffset: { width: 1, height: 1 },
@@ -33,7 +33,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent:'center',
         padding: 10,
-        margin: 10,
+        marginTop: 10,
+        marginBottom: 10,
+        marginLeft: 10,
+        marginRight: 10,
     },
     draftType: {
         fontSize: 18,

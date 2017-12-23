@@ -14,6 +14,7 @@ import Dashboard from './src/components/pages/dashboard/dashboard'
 import Mine from './src/components/pages/mine/mine'
 import Officehall from './src/components/pages/officehall/officehall'
 import Error from './src/components/pages/error'
+import Abroad from './src/components/pages/officehall/business/abroad'
 
 let TABSTATE = '任务'
 let HEADER_INVISIBLE = true
@@ -118,7 +119,8 @@ const Maintab = TabNavigator({
     },
   activeTintColor: '#8fb9fd',
   inactiveTintColor: '#7b7b7d',
-}
+},
+    initialRouteName: 'Officehall',
 })
 
 const Main = StackNavigator({
@@ -133,8 +135,9 @@ const Main = StackNavigator({
           headerStyle: {
             backgroundColor: '#8fb9fd'
           },
+          headerBackTitle: null,
           headerTitleStyle: {
-            fontSize: 22
+            fontSize: 24
           }
         }
       } else {
@@ -153,8 +156,25 @@ const Main = StackNavigator({
         headerStyle: {
           backgroundColor: '#8fb9fd', borderBottomWidth: 0
         },
+        headerBackTitle: null,
         headerTitleStyle: {
-          fontSize: 22
+          fontSize: 24
+        }
+      }
+    }
+  },
+  abroad: {
+    screen: Abroad,
+    navigationOptions: ({ navigation }) => {
+      return {
+        title: '出入境业务',
+        headerTintColor: 'white',
+        headerStyle: {
+          backgroundColor: '#8fb9fd', borderBottomWidth: 0
+        },
+        headerBackTitle: null,
+        headerTitleStyle: {
+          fontSize: 24
         }
       }
     }
