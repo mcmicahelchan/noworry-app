@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     draftState: {
         fontSize: 16,
         width: 100,
-        marginBottom: 15,
+        marginBottom: 10,
         color: '#9a9b9c',
     }
 

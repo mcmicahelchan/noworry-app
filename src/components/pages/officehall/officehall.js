@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
-import { Platform, StyleSheet, Text, View, TouchableOpacity, ScrollView, Dimensions, Image } from 'react-native'
+import { Platform, StyleSheet, Text, View, StatusBar, TouchableOpacity, TouchableHighlight, TouchableWithoutFeedback, ScrollView, Dimensions, Image, Modal, Animated, TextInput } from 'react-native'
 import { StackNavigator, TabNavigator } from 'react-navigation'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux';
 
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Swiper from 'react-native-swiper'
@@ -9,35 +11,219 @@ import * as Progress from 'react-native-progress'
 import Draft from './draft'
 import Option from './option'
 import Indicator from './indicator'
+import HisCell from './hisCell'
+import QuestionCell from './questionCell'
+
+import { addRecord, del } from '../../../actions/hisActions'
+
 
 const WIDTH = 0
 const { height, width } = Dimensions.get('window');
 console.log(height)
 let scrollheight = height==568 ? height+340 : height
 
-export default class officehall extends Component {
+class officehall extends Component {
   constructor () {
     super()
     this.state = {
-      text: 'good'
+      searchText: '',
+      modalVisible: false,
+      modalAnimType: 'none',
+      modalAnimHeaderMargin: new Animated.Value(250),
+      modalAnimBodyMargin: new Animated.Value(250),
+      isFound: false,
     }
   }
 
+  setModalVisible(visible) {
+    this.setState({ modalVisible: visible })
+  }
+
+  setModalInvisible() {
+    this.setState({ modalVisible: false })
+  }
+
+  setModalAnimType(type) {
+    this.setState({ modalAnimType: type })
+  }
+
+  modalSlideIn() {
+    Animated.parallel([
+      // 随时间变化而执行的动画类型
+      Animated.spring(
+        this.state.modalAnimHeaderMargin,                      // 动画中的变量值
+        {
+          toValue: 0,
+        },
+      ),
+      Animated.spring(
+        this.state.modalAnimBodyMargin,                      // 动画中的变量值
+        {
+          toValue: 0,
+        },
+      ), 
+    ]).start();  
+  }
+
+  
+  renderHis(record) {
+    record.map((data, index) => { 
+      return(
+            <HisCell key={index} item={data.name} linkPage={data.linkPage} navigation={this.props.navigation}/>
+        )
+      })
+  }
+
+  dismissModal() {
+    this.setModalInvisible()
+    this.setState({ modalAnimHeaderMargin: new Animated.Value(250), modalAnimBodyMargin: new Animated.Value(250) })
+  }
+
+  searchMatch(text, db) {
+    let find = false;
+    if (text != '') {
+      db.forEach((item) => {
+        console.log(item.name.match(text))
+        if (item.name.match(text) != null) {
+          find = true;
+        }
+      }
+      )
+    }
+    
+    this.setState({
+      isFound: find,
+    })
+  }
+
+  find() {
+
+  }
 
   render () {
-    console.log(height)
+    const { addRecord, hisRecords, del, questionRecords, searchDB } = this.props
+    const { searchText, isFound } = this.state
+    console.log(questionRecords)
     return (
+      <View style = {styles.outsideContainer}>
+        <Modal
+          animationType={this.state.modalAnimType}
+          transparent={false}
+          visible={this.state.modalVisible}
+          onRequestClose={() => { alert("Modal has been closed.") }}
+          onShow={() => { this.setModalAnimType('slide')}}
+        >
+          <View style={ styles.modalContainer }>
+            <StatusBar barStyle='light-content' />
+            <View style={styles.modalStatusBackground} />
+            <Animated.View style={[styles.modalHeader, {paddingLeft: this.state.modalAnimHeaderMargin}]}>
+            <View style={styles.modalSearchInputContainer}>
+                <TextInput 
+                ref="myInput"
+                style={styles.modalSearchBar}
+                autoFocus={true}
+                returnKeyType='search'
+                clearButtonMode='while-editing'
+                placeholder='搜索'
+                keyboardType='default'
+                value={searchText}
+                onChangeText={(text) => { this.setState({ searchText: text }); this.searchMatch(searchText, searchDB);}}
+                onEndEditing={()=> console.log('end')}
+                onChange={() => this.searchMatch(searchText, searchDB)}
+                onSubmitEditing={() => { if(searchText != '') {addRecord(searchText)}}}
+                />
+                <Ionicons name={'ios-search'} size={22} style={{ color: '#939393', position: 'absolute', backgroundColor: 'white', left:10, top: 4, }} />
+            </View>
+              
+              <TouchableOpacity style={styles.modalCancelBtd} onPress={() => { this.setModalInvisible(); this.setState({ modalAnimHeaderMargin: new Animated.Value(250), modalAnimBodyMargin: new Animated.Value(250) }) }}>
+                <Text style={{ color: 'white', fontSize: 16 }}>取消</Text>
+              </TouchableOpacity>
+            </Animated.View>
+
+            {!isFound || searchText == ''
+              ? 
+            <TouchableOpacity activeOpacity={1} style={styles.blurSection} onPress={() => this.refs.myInput.blur()}>
+              
+              <Animated.View style={{ marginTop: this.state.modalAnimBodyMargin}}>
+                {hisRecords.length != 0
+                  ? <View style={styles.historySection}>
+                  <View style={styles.modalSectionTitle}>
+                    <Text style={styles.modalTitleText}>历史搜索</Text>
+                    <TouchableOpacity onPress={() => del()}>
+                      <Ionicons name={'md-trash'} size={20} style={{ color: '#8fb9fd', marginTop: 4, marginLeft: 12 }} />
+                    </TouchableOpacity>
+                  </View>
+                  <View style={styles.modalOptionContainer}>
+                    {hisRecords.map((item, index) => {
+                      return (
+                        <HisCell key={index} item={item.name} linkPage={item.linkPage} navigation={this.props.navigation} dismissModal={() => this.dismissModal()} />
+                      )
+                    })}
+                  </View>
+                </View> 
+                : null}
+
+              <View style={[styles.historySection,]}>
+                <View style={styles.modalSectionTitle}>
+                  <Text style={styles.modalTitleText}>热门提问</Text>
+                  <TouchableOpacity style={{alignItems: 'flex-start' }}>
+                      <Text style={{ color: '#8fb9fd'}}>更多></Text>
+                  </TouchableOpacity>
+                </View>
+                <View style={styles.modalQuestionContainer}>
+                    {questionRecords.map((item, index) => {
+                      if ((index+1) != questionRecords.length) {
+                        return (
+                          <QuestionCell key={index} question={item.name} navigation={this.props.navigation} linkPage={item.linkPage} num={index + 1} dismissModal={() => this.dismissModal()} />
+                        )
+                      } else {
+                        console.log('last!')
+                        return (
+                          <QuestionCell key={index} question={item.name} navigation={this.props.navigation} style={{ borderBottomWidth: 0}} linkPage={item.linkPage} num={index + 1} dismissModal={() => this.dismissModal()} />
+                        )
+                      }
+                      
+                    })}    
+                </View>
+                </View>
+                </Animated.View>
+                
+            </TouchableOpacity>
+            :
+              <TouchableOpacity activeOpacity={1} style={styles.blurSection} onPress={() => this.refs.myInput.blur()}>
+                <ScrollView
+                  keyboardShouldPersistTaps={true}
+                  keyboardDismissMode='on-drag'
+                  showsVerticalScrollIndicator={false}
+                >
+                  {searchDB.map((data, index) => {
+                    if(data.name.match(searchText)) {
+                      return (
+                        <TouchableOpacity style={styles.resultCell} activeOpacity={0.8} onPress={() => { this.props.navigation.navigate(data.linkPage); this.dismissModal() }}>
+                          <Text style={{ color: '#8fb9fd', fontSize: 24, fontWeight: 'bold' }}>{data.name}</Text>
+                          <Text style={{ color: '#9f9f9f' }}>{data.category}</Text>
+                        </TouchableOpacity>
+                      )
+                    }
+                  })}
+                
+              </ScrollView>
+              </TouchableOpacity>
+          }
+
+          </View>
+        </Modal>
+
+
       <ScrollView style={styles.container } 
       contentContainerStyle={{alignItems: 'center', justifyContent: 'center'}}
-      showsVerticalScrollIndicator={false}
-        onContentSizeChange={(w, h) => { 
-          scrollheight = h
-          console.log('i am here')
-           }}>
-        <TouchableOpacity style={styles.searchBar} activeOpacity={1} >
+      showsVerticalScrollIndicator={false} >
+
+          <TouchableOpacity style={styles.searchBar} activeOpacity={1} onPress={() => { this.setModalAnimType('none'); this.modalSlideIn(); this.setModalVisible(true);}}>
           <Ionicons name={'ios-search'} size={18} style={{ color: '#dedede', marginTop: 2, marginRight: 6 }} />
           <Text style={styles.searchText}>搜索</Text>
         </TouchableOpacity>
+
       <View style={styles.viceContainer}>
           <TouchableOpacity style={styles.swipeContainer} activeOpacity={0.8}>
             <Text style={styles.header}>出入境业务</Text>
@@ -88,11 +274,15 @@ export default class officehall extends Component {
         
 
       </ScrollView>
+      </View>
     )
   }
 }
 
 const styles = StyleSheet.create({
+  outsideContainer:{
+    flex: 1,
+   },
   container: {
     borderWidth: WIDTH,
     borderColor: 'red',
@@ -242,7 +432,137 @@ const styles = StyleSheet.create({
     borderWidth: WIDTH,
     height: scrollheight-180,
     justifyContent: 'space-between',
+  },
+  modalContainer: {
+    flex: 1,
+    borderColor: 'red',
+    borderWidth: WIDTH,
+  },
+  modalHeader: {
+    height: 44,
+    borderColor: 'green',
+    borderWidth: WIDTH,
+    backgroundColor: '#8fb9fd',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  modalSearchBar:{
+    width: 310,
+    height: 29,
+    borderRadius: 10,
+    backgroundColor:'white',
+    paddingLeft: 33,
+    paddingTop: 1.5,
+  },
+  modalStatusBackground:{
+    height: 20,
+    borderColor: 'green',
+    borderWidth: WIDTH,
+    backgroundColor: '#8fb9fd',
+  },
+  modalCancelBtd: {
+    borderColor: 'green',
+    borderWidth: WIDTH,
+    marginLeft: 12,
+    width: 40,
+    height: 29,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalSearchInputContainer: {
+    width: 310,
+    height: 29,
+  },
+  historySection: {
+    borderColor: 'orange',
+    borderWidth: WIDTH,
+    backgroundColor: 'white',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 0.2 },
+    shadowOpacity: 0.4,
+    shadowRadius: 2,
+    elevation: 1,
+    marginBottom: 15,
+  },
+  modalSectionTitle: {
+    borderColor: '#f3f3f3',
+    borderBottomWidth: 0.8,
+    height: 45,
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    marginLeft:25,
+    paddingTop: 8,
+  },
+  modalTitleText: {
+    width: 300,
+    color:'#8fb9fd',
+    fontSize: 16,
+    textAlign: 'left',
+    borderColor: 'orange',
+    borderWidth: WIDTH,
+  },
+  modalOptionContainer: {
+    margin: 10,
+    borderColor: 'orange',
+    borderWidth: WIDTH,
+    marginLeft:25,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  blurSection: {
+    flex: 1, 
+    borderWidth: WIDTH,
+    borderColor: 'green' 
+  },
+  question: {
+    height: 41,
+    lineHeight: 41,
+    borderColor: '#f3f3f3',
+    borderBottomWidth: 0.8,
+  },
+  modalQuestionContainer: {
+    margin: 10,
+    marginBottom: 0,
+    borderColor: 'orange',
+    borderWidth: WIDTH,
+    marginLeft: 25,
+  },
+  qustionCell: {
+    borderColor: '#f3f3f3',
+    borderBottomWidth: 1,
+    
+  },
+  resultCell: {
+    height: 80,
+    justifyContent: 'center',
+    paddingLeft: 30,
+    backgroundColor: 'white',
+    borderColor: '#e4e4e4',
+    borderBottomWidth: 0.8,
   }
   
-
+  
 })
+
+
+function mapStateToProps(state) {
+  return {
+    hisRecords: state.his.reverse(),
+    questionRecords: state.searchQs,
+    searchDB: state.searchDB,
+  };
+}
+
+function mapDispatchProps(dispatch) {
+  return {
+    addRecord: bindActionCreators(addRecord, dispatch),
+    del: bindActionCreators(del, dispatch),
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchProps
+)(officehall)
