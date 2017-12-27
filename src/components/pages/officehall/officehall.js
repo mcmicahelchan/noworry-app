@@ -291,8 +291,8 @@ const styles = StyleSheet.create({
     
   },
   searchBar: {
-    borderWidth: WIDTH,
-    borderColor: 'red',
+    borderWidth: 1,
+    borderColor: '#999999',
     height: 34,
     marginBottom: 12,
     marginTop: 12,
@@ -302,11 +302,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 0.2 },
-    shadowOpacity: 0.4,
-    shadowRadius: 2,
-    elevation: 1,
+
   },
   searchText: {
     color: '#999999'
@@ -316,6 +312,7 @@ const styles = StyleSheet.create({
     borderColor: 'black',
     width: width - 16,
     height: 100,
+    
   },
   draftboxContainer: {
     borderWidth: WIDTH,

@@ -20,7 +20,7 @@ export default function option(props) {
 
 const styles = StyleSheet.create({
     draftContainer: {
-        height: 90,
+        height: 80,
         width: 140,
         borderRadius: 8,
         shadowColor: 'grey',
