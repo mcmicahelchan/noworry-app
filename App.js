@@ -15,6 +15,7 @@ import Mine from './src/components/pages/mine/mine'
 import Officehall from './src/components/pages/officehall/officehall'
 import Error from './src/components/pages/error'
 import Abroad from './src/components/pages/officehall/business/abroad'
+import Appointment from './src/components/pages/appointment/appointment'
 
 let TABSTATE = '任务'
 let HEADER_INVISIBLE = true
@@ -70,7 +71,7 @@ const Maintab = TabNavigator({
     navigationOptions: {
       tabBarLabel: '任务',
       tabBarIcon: ({ tintColor, focused }) => (
-        <Ionicons name={focused ? 'ios-list-box' : 'ios-list-box-outline'} size={26} style={focused ? { color: '#8fb9fd' } : {color: '#7b7b7d'}} />
+        <Ionicons name={focused ? 'ios-list-box' : 'ios-list-box-outline'} size={26} style={focused ? { color: '#4380FC' } : {color: '#7b7b7d'}} />
       ),
       labelStyle: {
         fontSize: 20
@@ -86,7 +87,7 @@ const Maintab = TabNavigator({
     navigationOptions: {
       tabBarLabel: '办事大厅',
       tabBarIcon: ({ tintColor, focused }) => (
-        <Ionicons name={focused ? 'ios-list-box' : 'ios-list-box-outline'} size={26} style={focused ? { color: '#8fb9fd' } : {color: '#7b7b7d'}} />
+        <Ionicons name={focused ? 'ios-list-box' : 'ios-list-box-outline'} size={26} style={focused ? { color: '#4380FC' } : {color: '#7b7b7d'}} />
       ),
       labelStyle: {
         fontSize: 20
@@ -103,7 +104,7 @@ const Maintab = TabNavigator({
     navigationOptions: {
       tabBarLabel: '我的',
       tabBarIcon: ({ tintColor, focused }) => (
-        <Ionicons name={focused ? 'ios-person' : 'ios-person-outline'} size={26}  style={focused ? { color: '#8fb9fd' } : {color: '#7b7b7d'}}/>
+        <Ionicons name={focused ? 'ios-person' : 'ios-person-outline'} size={26}  style={focused ? { color: '#4380FC' } : {color: '#7b7b7d'}}/>
       ),
       tabBarOnPress: ({scene, jumpToIndex}) => {
         changeTabTitle(3)
@@ -117,7 +118,7 @@ const Maintab = TabNavigator({
       fontSize: 13,
       paddingBottom: 2
     },
-  activeTintColor: '#8fb9fd',
+  activeTintColor: '#4380FC',
   inactiveTintColor: '#7b7b7d',
 },
     initialRouteName: 'Officehall',
@@ -133,7 +134,7 @@ const Main = StackNavigator({
           headerMode: 'none',
           headerTintColor: 'white',
           headerStyle: {
-            backgroundColor: '#8fb9fd'
+            backgroundColor: '#4380FC'
           },
           headerBackTitle: null,
           headerTitleStyle: {
@@ -154,7 +155,7 @@ const Main = StackNavigator({
         title: '此路不通',
         headerTintColor: 'white',
         headerStyle: {
-          backgroundColor: '#8fb9fd', borderBottomWidth: 0
+          backgroundColor: '#4380FC', borderBottomWidth: 0
         },
         headerBackTitle: null,
         headerTitleStyle: {
@@ -170,7 +171,23 @@ const Main = StackNavigator({
         title: '出入境业务',
         headerTintColor: 'white',
         headerStyle: {
-          backgroundColor: '#8fb9fd', borderBottomWidth: 0
+          backgroundColor: '#4380FC', borderBottomWidth: 0
+        },
+        headerBackTitle: null,
+        headerTitleStyle: {
+          fontSize: 24
+        }
+      }
+    }
+  },
+  appointment: {
+    screen: Appointment,
+    navigationOptions: ({ navigation }) => {
+      return {
+        title: '广州户籍预约',
+        headerTintColor: 'white',
+        headerStyle: {
+          backgroundColor: '#4380FC', borderBottomWidth: 0
         },
         headerBackTitle: null,
         headerTitleStyle: {

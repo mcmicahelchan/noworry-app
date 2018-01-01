@@ -23,7 +23,7 @@ export default class abroad extends Component {
         return (
             <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
                 <BtdSection sectionName='业务办理'>
-                    <BusinessBtd navigation={this.props.navigation} businessType='广州市户籍预约' icon='md-baseball' linkPage='error' line={true} />
+                    <BusinessBtd navigation={this.props.navigation} businessType='广州市户籍预约' icon='md-baseball' linkPage='appointment' line={true} />
                     <BusinessBtd navigation={this.props.navigation} businessType='广州市户籍预约' icon='md-baseball' linkPage='error' line={true} />
                     <BusinessBtd navigation={this.props.navigation} businessType='广州市户籍预约' icon='md-baseball' linkPage='error' line={false} />
                 </BtdSection>

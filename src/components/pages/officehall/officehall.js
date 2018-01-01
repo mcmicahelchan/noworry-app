@@ -150,7 +150,7 @@ class officehall extends Component {
                   <View style={styles.modalSectionTitle}>
                     <Text style={styles.modalTitleText}>历史搜索</Text>
                     <TouchableOpacity onPress={() => del()}>
-                      <Ionicons name={'md-trash'} size={20} style={{ color: '#8fb9fd', marginTop: 4, marginLeft: 12 }} />
+                      <Ionicons name={'md-trash'} size={20} style={{ color: '#4380FC', marginTop: 4, marginLeft: 12 }} />
                     </TouchableOpacity>
                   </View>
                   <View style={styles.modalOptionContainer}>
@@ -167,7 +167,7 @@ class officehall extends Component {
                 <View style={styles.modalSectionTitle}>
                   <Text style={styles.modalTitleText}>热门提问</Text>
                   <TouchableOpacity style={{alignItems: 'flex-start' }}>
-                      <Text style={{ color: '#8fb9fd'}}>更多></Text>
+                      <Text style={{ color: '#4380FC'}}>更多></Text>
                   </TouchableOpacity>
                 </View>
                 <View style={styles.modalQuestionContainer}>
@@ -200,7 +200,7 @@ class officehall extends Component {
                     if(data.name.match(searchText)) {
                       return (
                         <TouchableOpacity style={styles.resultCell} activeOpacity={0.8} onPress={() => { this.props.navigation.navigate(data.linkPage); this.dismissModal() }}>
-                          <Text style={{ color: '#8fb9fd', fontSize: 24, fontWeight: 'bold' }}>{data.name}</Text>
+                          <Text style={{ color: '#4380FC', fontSize: 24, fontWeight: 'bold' }}>{data.name}</Text>
                           <Text style={{ color: '#9f9f9f' }}>{data.category}</Text>
                         </TouchableOpacity>
                       )
@@ -224,8 +224,29 @@ class officehall extends Component {
           <Text style={styles.searchText}>搜索</Text>
         </TouchableOpacity>
 
+          <View style={styles.swipeContainer}>
+            <Swiper style={styles.wrapper}
+              showsButtons={false}
+              showsPagination={true}
+              height={108} width={width - 16}
+              activeDotStyle={{ height: 3, width: 6 }}
+              dotStyle={{ height: 2, width: 4 }}
+              paginationStyle={{ position: 'absolute', bottom: 2 }}
+              removeClippedSubviews={false}>
+              <View style={styles.slide1}>
+                <Image source={require('../../../../app-assets/officehall/banner_1.png')} style={styles.pic} />
+              </View>
+              <View style={styles.slide2}>
+                <Image source={require('../../../../app-assets/officehall/banner_2.png')} style={styles.pic} />
+              </View>
+              <View style={styles.slide3}>
+                <Image source={require('../../../../app-assets/officehall/banner_3.png')} style={styles.pic} />
+              </View>
+            </Swiper>
+          </View> 
+
       <View style={styles.viceContainer}>
-          <TouchableOpacity style={styles.swipeContainer} activeOpacity={0.8}>
+          <TouchableOpacity style={styles.detailContainer} activeOpacity={0.8}>
             <Text style={styles.header}>出入境业务</Text>
             <View style={styles.indicatorContainer}>
               <Indicator state='填写资料' type={1} date='11月24日' />
@@ -237,28 +258,7 @@ class officehall extends Component {
               <Indicator state='快递' type={3} date='12月3日' />
             </View>
           </TouchableOpacity>
-          <View style={styles.draftboxContainer}>
-            <View style={styles.draftboxHeaderContainer}>
-              <Text style={styles.draftboxHeaderText}>草稿箱</Text>
-              <Ionicons name={'md-create'} size={22} style={{ color: 'grey', marginTop: 5 }} />
-            </View>
-            <ScrollView
-              horizontal={true}
-              showsHorizontalScrollIndicator={false}
-              showsVerticalScrollIndicator={false}
-              style={styles.draftsScroll}
-              contentContainerStyle={{ alignItems: 'center' }}
-              pagingEnabled={true}
-            >
-              <Draft navigation={this.props.navigation} state='信息录入中' process={0.37} type='通行证' linkPage='error' />
-              <Draft navigation={this.props.navigation} state='信息录入中' process={0.27} type='入台证' linkPage='error' />
-              <Draft navigation={this.props.navigation} state='信息校验' process={0.87} type='身份证' linkPage='error' />
-              <Draft navigation={this.props.navigation} state='信息录入中' process={0.69} type='未命名' linkPage='error' />
-
-            </ScrollView>
-
-
-          </View>
+         
           <View style={styles.optionsContainer}>
             <View style={styles.draftboxHeaderContainer}>
               <Text style={styles.draftboxHeaderText}>业务选择</Text>
@@ -307,11 +307,11 @@ const styles = StyleSheet.create({
   searchText: {
     color: '#999999'
   },
-  swipeContainer: {
+  detailContainer: {
     borderWidth: WIDTH,
     borderColor: 'black',
     width: width - 16,
-    height: 100,
+    height: 110,
     
   },
   draftboxContainer: {
@@ -352,7 +352,7 @@ const styles = StyleSheet.create({
   },
   optionsContainer: {
     borderWidth: WIDTH,
-    borderColor: 'green',
+    borderColor: 'orange',
     backgroundColor: '#FFFFFF',
     width: width - 16,
     alignItems: 'center',
@@ -395,7 +395,7 @@ const styles = StyleSheet.create({
     height: 15,
     width: 15,
     borderRadius: 7.5,
-    backgroundColor: '#8fb9fd'
+    backgroundColor: '#4380FC'
   },
   indicatorCell: {
     borderWidth: WIDTH,
@@ -427,8 +427,10 @@ const styles = StyleSheet.create({
   viceContainer: {
     borderColor: 'blue',
     borderWidth: WIDTH,
-    height: scrollheight-180,
-    justifyContent: 'space-between',
+    height: scrollheight-285,
+    justifyContent: 'space-around',
+    paddingBottom:20,
+    paddingTop: 20,
   },
   modalContainer: {
     flex: 1,
@@ -439,7 +441,7 @@ const styles = StyleSheet.create({
     height: 44,
     borderColor: 'green',
     borderWidth: WIDTH,
-    backgroundColor: '#8fb9fd',
+    backgroundColor: '#4380FC',
     justifyContent: 'center',
     flexDirection: 'row',
     alignItems: 'center',
@@ -456,7 +458,7 @@ const styles = StyleSheet.create({
     height: 20,
     borderColor: 'green',
     borderWidth: WIDTH,
-    backgroundColor: '#8fb9fd',
+    backgroundColor: '#4380FC',
   },
   modalCancelBtd: {
     borderColor: 'green',
@@ -494,7 +496,7 @@ const styles = StyleSheet.create({
   },
   modalTitleText: {
     width: 300,
-    color:'#8fb9fd',
+    color:'#4380FC',
     fontSize: 16,
     textAlign: 'left',
     borderColor: 'orange',
@@ -538,7 +540,21 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderColor: '#e4e4e4',
     borderBottomWidth: 0.8,
-  }
+  },
+  swipeContainer: {
+    borderWidth: WIDTH,
+    borderColor: 'black',
+    width: width - 16,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 0.2 },
+    shadowOpacity: 0.4,
+    shadowRadius: 2,
+    elevation: 1,
+  },
+  pic: {
+    width: width - 16,
+    height: 108,
+  },
   
   
 })

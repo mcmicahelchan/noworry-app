@@ -13,7 +13,7 @@ export default function businessBtd(props) {
 
     return (
         <TouchableOpacity style={line ? styles.btdContainerWithLine : styles.btdContainer} activeOpacity={0.8} onPress={() => navigation.navigate(linkPage)} >
-            <Ionicons name={icon} size={34} style={{ color: '#8fb9fd' }} />
+            <Ionicons name={icon} size={34} style={{ color: '#4380FC' }} />
             <Text style={styles.draftType}>{businessType}</Text>
         </TouchableOpacity>
     )

@@ -11,7 +11,7 @@ function getIndicatorInside(type) {
     switch (type) {
         case 1: {
             return (
-                <Ionicons name={'md-checkmark'} size={20} style={{ color: '#8fb9fd', }} />
+                <Ionicons name={'md-checkmark'} size={20} style={{ color: '#4380FC', }} />
             )
         }
         case 2: {
@@ -33,7 +33,7 @@ export default function indicator(props) {
             return (
                 <View style={styles.indicatorCell}>
                     <View style={[styles.circle, styles.circleType3]}>
-                         <Ionicons name={'md-checkmark'} size={20} style={{ color: '#8fb9fd', }} />
+                         <Ionicons name={'md-checkmark'} size={20} style={{ color: '#4380FC', }} />
                     </View>
                     <Text style={styles.indicatorText}>{date}</Text>
                     <Text style={styles.indicatorText} >{state}</Text>
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
         height: 15,
         width: 15,
         borderRadius: 7.5,
-        backgroundColor: '#8fb9fd'
+        backgroundColor: '#4380FC'
     },
     indicatorCell: {
         borderWidth: WIDTH,
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
         borderColor: '#c3c3c3', 
     },    
     indicatorTextType2: {
-        color: '#8fb9fd',
+        color: '#4380FC',
     }
 
 })

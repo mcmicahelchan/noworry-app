@@ -12,7 +12,7 @@ export default function option(props) {
 
     return (
         <TouchableOpacity style={[styles.draftContainer]} onPress={() => navigation.navigate(linkPage)} activeOpacity={0.7}>
-            <Ionicons name={icon} size={34} style={{ color: '#8fb9fd' }} />
+            <Ionicons name={icon} size={34} style={{ color: '#4380FC' }} />
             <Text style={styles.draftType}>{businessType}</Text>
         </TouchableOpacity>
     )
