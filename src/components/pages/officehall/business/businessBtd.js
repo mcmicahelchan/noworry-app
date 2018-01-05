@@ -9,11 +9,11 @@ const WIDTH = 0
 const { height, width } = Dimensions.get('window')
 
 export default function businessBtd(props) {
-    const { businessType, icon, navigation, linkPage, line } = props
+    const { businessType, icon, navigation, linkPage, line, goBackKey } = props
 
     return (
-        <TouchableOpacity style={line ? styles.btdContainerWithLine : styles.btdContainer} activeOpacity={0.8} onPress={() => navigation.navigate(linkPage)} >
-            <Ionicons name={icon} size={34} style={{ color: '#4380FC' }} />
+        <TouchableOpacity style={line ? styles.btdContainerWithLine : styles.btdContainer} activeOpacity={0.8} onPress={() => navigation.navigate(linkPage, { goBackKey: goBackKey})} >
+            <Ionicons name={icon} size={34} style={{ color: '#6999FD' }} />
             <Text style={styles.draftType}>{businessType}</Text>
         </TouchableOpacity>
     )

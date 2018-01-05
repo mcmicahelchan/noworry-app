@@ -46,14 +46,14 @@ class mine extends Component {
             <Cell navigation={this.props.navigation}  title='个人信息库' icon='md-person' iconColor='#ffcc00' linkPage='error' isLast={true} />
         </View>
         <View style={styles.cellsContainer}>
-            <Cell navigation={this.props.navigation}  title='我的草稿箱' icon='md-document' iconColor='#4380FC' linkPage='error' isLast={false} />
-            <Cell navigation={this.props.navigation}  title='我的办理历史' icon='md-time' iconColor='#4380FC' linkPage='error' isLast={true} />
+            <Cell navigation={this.props.navigation}  title='我的草稿箱' icon='md-document' iconColor='#6999FD' linkPage='error' isLast={false} />
+            <Cell navigation={this.props.navigation}  title='我的办理历史' icon='md-time' iconColor='#6999FD' linkPage='error' isLast={true} />
         </View>
         <View style={styles.cellsContainer}>
             <Cell navigation={this.props.navigation}  title='设置' icon='md-cog' iconColor='#aaaaaa' linkPage='error' isLast={true} />
         </View>
          <View style={styles.cellsContainer}>
-            <Cell navigation={this.props.navigation}  title='关于App' icon='md-alert' iconColor='#4380FC' linkPage='error' isLast={true} />
+            <Cell navigation={this.props.navigation}  title='关于App' icon='md-alert' iconColor='#6999FD' linkPage='error' isLast={true} />
         </View>
       </View>
     )

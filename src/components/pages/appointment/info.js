@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
-import { Platform, StyleSheet, Text, View, Dimensions, Image, TouchableOpacity, TextInput, TouchableHighlight, ScrollView } from 'react-native'
+import { Platform, StyleSheet, Text, View, Button, Dimensions, Image, TouchableOpacity, TextInput, TouchableHighlight, ScrollView } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
-import { StackNavigator, TabNavigator } from 'react-navigation'
-import Ionicons from 'react-native-vector-icons/Ionicons'
+import { StackNavigator, TabNavigator, NavigationActions } from 'react-navigation'
 
 import { modify } from '../../../actions/userActions'
 
 import Carousel from 'react-native-snap-carousel'
+import Ionicons from 'react-native-vector-icons/Ionicons'
 
 import FileCell from './fileCell'
 import InputBox from './inputBox'
@@ -18,7 +18,25 @@ const { height, width } = Dimensions.get('window');
 import { addFamilyName, addFirstName, addID } from '../../../actions/appointActions'
 
 
-class appointment extends Component {
+
+class info extends Component {
+    
+    static navigationOptions = ({ navigation }) => {
+        const { goBack } = navigation
+        console.log(navigation)
+        return {
+            title: '大家好',
+            headerLeft: 
+            <TouchableOpacity onPress={() => { console.log('hi'); navigation.goBack(navigation.state.key) }} style={{marginLeft: 10}}>
+                <Ionicons name={'ios-arrow-back'} size={30} style={{ color: 'white', marginLeft: 10, marginRight: 10  }} />
+            </TouchableOpacity>,
+        }
+    }
+    
+    goBack(where) {
+        this.props.navigation.goBack(where)
+    }
+
     constructor() {
         super()
         this.state = {
@@ -158,52 +176,43 @@ class appointment extends Component {
 
     render() {
         const { title } = this.state
-        console.log(this.props)
+        console.log(this.props.navigation.state.key)
         return (
             <View style={styles.container}>
-                <View style={styles.upperIndicatorContainer}>
-                    {this.state.index.map((item, index) => {
-                        if (item == 1) {
-                            return (
-                                <Text style={{ fontSize: 16, fontWeight: 'bold' }}>{title[index]}</Text>
-                            )
-                        }
-                    })}
+                <View style={styles.indicatorContainer}>
+                    <View style={styles.colorCircle}>
+                        <Text style={{color: 'white'}}>1</Text>
+                    </View>
+                    <View style={styles.noColorCircle}>
+                        <Text >2</Text>
+                    </View>
+                    <View style={styles.noColorCircle}>
+                        <Text >3</Text>
+                    </View>
+                    <View style={styles.noColorCircle}>
+                        <Text >4</Text>
+                    </View>
+                    <View style={styles.noColorCircle}>
+                        <Text >5</Text>
+                    </View>
                 </View>
-                 <View style={styles.carouselContainer}>
-                    <Carousel
-                        slideStyle={styles.item}
-                        ref={(c) => { this._carousel = c; }}
-                        data={this.state.data}
-                        renderItem={this._renderItem.bind(this)}
-                        sliderWidth={width}
-                        itemWidth={width - 80}
-                        inactiveSlideScale={0.85}
-                        onScroll={() => {
-                            console.log('slideIndex')
-                        }}
-                        onSnapToItem={(slideIndex) => this._setIndex(slideIndex)}
-                    />
-                </View>  
-                <View style={styles.upperIndicatorContainer}>
-                    {this.state.index.map((item, index) => {
-                        if (item == 1) {
-                            return (
-                                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                    <View key={index} style={styles.colorCircle}>
-                                        <Text style={{ color: 'white' }}>{index + 1}</Text>
-                                    </View>
-                                </View>
 
-                            )
-                        } else {
-                            return (
-                                <View key={index} style={styles.noColorCircle}>
-                                    <Text style={{ color: '#8C8C8C' }}>{index + 1}</Text>
-                                </View>
-                            )
-                        }
-                    })}
+                <Text style={styles.title}>这是您要准备的资料</Text>
+                
+                <View style={styles.bodyContainer}>
+                    <TouchableOpacity activeOpacity={0} style={[styles.activeBtd, {opacity: 0}]}>
+                        <Ionicons name={'ios-arrow-back'} size={30} style={{color:'white'}} />
+                    </TouchableOpacity>
+                    <View style={styles.filesContainer}>
+                        <FileCell title='基础资料' item={['身份证原件及复印件', '户口本原件及复印件']} />
+                        <FileCell title='专用资料' item={['学生证原件及复印件', '在校证明原件及复印件']} />
+                        <FileCell title='图像资料' item={['大一寸照*1', '居住证相片回执']} />
+                        <FileCell title='办理费用' item={['居住证工本费 200元']} />
+                    </View>
+
+                    <TouchableOpacity style={styles.inactvieBtd} onPress={() => this.props.navigation.navigate('input', { goBackKey: this.props.navigation.state.key})}>
+                        <Ionicons name={'ios-arrow-forward'} size={30} style={{ color: 'white' }} />
+                    </TouchableOpacity>
                 </View>
             </View>
         )
@@ -218,6 +227,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#fafafa',
         justifyContent: 'center',
         alignItems: 'center',
+        paddingTop: 10,
     },
     slide: {
         borderColor: 'red',
@@ -249,7 +259,7 @@ const styles = StyleSheet.create({
         borderRadius: 5, 
         borderColor: '#949494', 
         borderWidth: 0.5,
-        backgroundColor: '#4380FC'
+        backgroundColor: '#6999FD'
     },
     noColorDot: { 
         height: 10, 
@@ -258,9 +268,9 @@ const styles = StyleSheet.create({
         borderWidth: 0.5,
         borderColor: '#949494', 
     },
-    lowerIndicatorContainer: {
-        height: 15,
-        width: 80,
+    indicatorContainer: {
+        height: 35,
+        width: 140,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
@@ -280,7 +290,7 @@ const styles = StyleSheet.create({
         borderRadius: 16,
         borderColor: '#e9e9e9',
         borderWidth: 1.5,
-        backgroundColor: '#4380FC',
+        backgroundColor: '#6999FD',
         justifyContent: 'center',
         alignItems: 'center', 
     },
@@ -300,6 +310,14 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         alignItems: 'flex-start',
         paddingTop: 30,
+        backgroundColor: '#FFFFFF',
+        borderRadius: 10,
+        shadowColor: '#000',
+        shadowOffset: { width: 10, height: 10 },
+        shadowOpacity: 0.4,
+        shadowRadius: 2,
+        elevation: 1,
+        marginBottom: 10,
        
     },
     inputPageContainer: {
@@ -318,9 +336,44 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         borderRadius: 6,
         marginRight: 10,
+    
     },
     inputSection: {
         marginBottom: 16,
+    },
+    title: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginBottom: 10,
+        color: 'black'
+    },
+    bodyContainer: {
+        borderColor: 'yellow',
+        borderWidth: WIDTH,
+        marginBottom: 15,
+        width: width,
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'center',
+
+    },
+    activeBtd: {
+        width: 37,
+        height: 181,
+        backgroundColor: '#6999FD',
+        justifyContent: 'center',
+        alignItems: 'center',
+        alignSelf: 'center',
+        marginBottom: 35,
+    },
+    inactvieBtd: {
+        width: 37,
+        height: 181,
+        backgroundColor: '#6999FD',
+        justifyContent: 'center',
+        alignItems: 'center',
+        alignSelf: 'center',
+        marginBottom: 35,
     }
 
 })
@@ -343,4 +396,4 @@ function mapDispatchProps(dispatch) {
 export default connect(
     mapStateToProps,
     mapDispatchProps
-)(appointment)
+)(info)

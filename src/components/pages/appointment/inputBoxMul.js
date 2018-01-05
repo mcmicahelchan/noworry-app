@@ -7,11 +7,11 @@ import * as Progress from 'react-native-progress';
 
 const WIDTH = 0
 
-export default class inputBox extends Component {
+export default class inputBoxMul extends Component {
 
     constructor() {
         super()
-        this.state= {
+        this.state = {
             text: '',
             isValid: true,
             isFirst: true,
@@ -19,7 +19,7 @@ export default class inputBox extends Component {
         }
     }
 
-    
+
     _textChange(value) {
         this.setState({
             text: value,
@@ -44,7 +44,6 @@ export default class inputBox extends Component {
                         this.setState({
                             isValid: false,
                         })
-                        this.props.setValue('familyName', '')
                     }
                     break
                 }
@@ -56,7 +55,6 @@ export default class inputBox extends Component {
                         this.setState({
                             isValid: false,
                         })
-                        this.props.setValue('firstName', '')
                     }
                     break
                 }
@@ -68,7 +66,6 @@ export default class inputBox extends Component {
                         this.setState({
                             isValid: false,
                         })
-                        this.props.setValue('id', '')
                     }
                     break
                 }
@@ -80,7 +77,6 @@ export default class inputBox extends Component {
                         this.setState({
                             isValid: false,
                         })
-                        this.props.setValue('phone', '')
                     }
                     break
                 }
@@ -92,7 +88,6 @@ export default class inputBox extends Component {
                         this.setState({
                             isValid: false,
                         })
-                        this.props.setValue('bdp', '')
                     }
                     break
                 }
@@ -101,26 +96,25 @@ export default class inputBox extends Component {
             this.setState({
                 isNull: true,
             })
-
             switch (this.props.placeholder) {
                 case '姓': {
-                        this.props.setValue('familyName', '')
+                    this.props.setValue('familyName', this.state.text)
                     break
                 }
                 case '名': {
-                        this.props.setValue('firstName', '')
+                    this.props.setValue('firstName', this.state.text)
                     break
                 }
                 case '身份证号': {
-                        this.props.setValue('id', '')
+                    this.props.setValue('id', this.state.text)
                     break
                 }
                 case '联系电话': {
-                        this.props.setValue('phone', '')
+                    this.props.setValue('phone', this.state.text)
                     break
                 }
                 case '出生地': {
-                        this.props.setValue('bdp', '')
+                    this.props.setValue('bdp', this.state.text)
                     break
                 }
             }
@@ -133,7 +127,7 @@ export default class inputBox extends Component {
                 this.setState({
                     isNull: true,
                 })
-            } 
+            }
         }
     }
 
@@ -145,7 +139,8 @@ export default class inputBox extends Component {
 
     render() {
         const { placeholder, setValue, width, value } = this.props
-        
+        console.log(value)
+
         return (
             <View>
                 <TextInput
@@ -155,20 +150,21 @@ export default class inputBox extends Component {
                     value={this.state.isFirst ? value : this.state.text}
                     onChangeText={(value) => this._textChange(value)}
                     onEndEditing={() => this._checking(this.state.text)}
-                    style={[styles.inputbox, { width: width, borderColor: (this.state.isValid && !this.state.isNull) || (!this.state.isValid && this.state.isNull)? '#bbbbbb' : '#aa1a1f' }]}
+                    multiline={true}
+                    style={[styles.inputbox, { width: width, borderColor: (this.state.isValid && !this.state.isNull) || (!this.state.isValid && this.state.isNull) ? '#bbbbbb' : '#aa1a1f' }]}
                 />
-                {this.state.isValid ? null : <Text style={{ marginTop: 5, color: '#aa1a1f'}}>请填入正确的{placeholder}</Text>}
+                {this.state.isValid ? null : <Text style={{ marginTop: 5, color: '#aa1a1f' }}>请填入正确的{placeholder}</Text>}
                 {(!this.state.isNull) ? null : <Text style={{ marginTop: 5, color: '#aa1a1f' }}>请填入{placeholder}</Text>}
             </View>
-            
+
         )
     }
-    
+
 }
 
 const styles = StyleSheet.create({
     inputbox: {
-        height: 52,
+        height: 64,
         fontSize: 18,
         borderColor: '#bbbbbb',
         borderWidth: 2,

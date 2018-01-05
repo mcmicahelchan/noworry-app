@@ -14,7 +14,7 @@ export default function draft(props) {
         <TouchableOpacity style={styles.draftContainer} onPress={() => navigation.navigate(linkPage)} activeOpacity={0.7}>
             <Text style={styles.draftType}>{type}</Text>
             <Text style={styles.draftState}>{state}</Text>
-            <Progress.Bar progress={process} width={100} color='#4380FC' borderWidth={0} unfilledColor='#e3e4e5' />
+            <Progress.Bar progress={process} width={100} color='#6999FD' borderWidth={0} unfilledColor='#e3e4e5' />
 
         </TouchableOpacity>
     )

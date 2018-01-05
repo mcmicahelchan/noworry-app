@@ -18,6 +18,7 @@ import { addRecord, del } from '../../../actions/hisActions'
 
 
 const WIDTH = 0
+const SWIPER_HEIGHT = 108
 const { height, width } = Dimensions.get('window');
 console.log(height)
 let scrollheight = height==568 ? height+340 : height
@@ -32,6 +33,30 @@ class officehall extends Component {
       modalAnimHeaderMargin: new Animated.Value(250),
       modalAnimBodyMargin: new Animated.Value(250),
       isFound: false,
+      visibleSwiper: false
+    }
+  }
+
+  componentDidMount() {
+    setTimeout(() => {
+      this.setState({
+        visibleSwiper: true
+      });
+    }, 1);
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    console.log(nextState, this.state, nextProps, this.props)
+    if (nextState.modalVisible == true && this.state.modalVisible == false) {
+      this.modalSlideIn()
+    }
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if ((this.state.modalVisible == true && this.state.modalAnimType === 'none' && nextState.modalAnimType == 'slide')) {
+      return false
+    } else {
+      return true
     }
   }
 
@@ -43,9 +68,6 @@ class officehall extends Component {
     this.setState({ modalVisible: false })
   }
 
-  setModalAnimType(type) {
-    this.setState({ modalAnimType: type })
-  }
 
   modalSlideIn() {
     Animated.parallel([
@@ -80,6 +102,7 @@ class officehall extends Component {
   }
 
   searchMatch(text, db) {
+    console.log('text', text)
     let find = false;
     if (text != '') {
       db.forEach((item) => {
@@ -94,6 +117,7 @@ class officehall extends Component {
     this.setState({
       isFound: find,
     })
+    console.log('isFound', this.state.isFound)
   }
 
   find() {
@@ -103,18 +127,45 @@ class officehall extends Component {
   render () {
     const { addRecord, hisRecords, del, questionRecords, searchDB } = this.props
     const { searchText, isFound } = this.state
-    console.log(questionRecords)
+    
+
+    let swiper = null;
+    if (this.state.visibleSwiper) {
+      swiper = <View style={[styles.swipeContainer, ]}>
+        <Swiper style={styles.wrapper}
+          showsButtons={false}
+          showsPagination={true}
+          height={108} width={width - 16}
+          activeDotStyle={{ height: 3, width: 6 }}
+          dotStyle={{ height: 2, width: 4 }}
+          paginationStyle={{ position: 'absolute', bottom: 2 }}
+          removeClippedSubviews={false}>
+          <View style={styles.slide1}>
+            <Image source={require('../../../../app-assets/officehall/banner_1.png')} style={styles.pic} />
+          </View>
+          <View style={styles.slide2}>
+            <Image source={require('../../../../app-assets/officehall/banner_2.png')} style={styles.pic} />
+          </View>
+          <View style={styles.slide3}>
+            <Image source={require('../../../../app-assets/officehall/banner_3.png')} style={styles.pic} />
+          </View>
+        </Swiper>
+      </View>;
+    } else {
+      swiper = <View></View>;
+    }
+
+
     return (
       <View style = {styles.outsideContainer}>
         <Modal
-          animationType={this.state.modalAnimType}
+          animationType='none'
           transparent={false}
           visible={this.state.modalVisible}
           onRequestClose={() => { alert("Modal has been closed.") }}
-          onShow={() => { this.setModalAnimType('slide')}}
         >
           <View style={ styles.modalContainer }>
-            <StatusBar barStyle='light-content' />
+            <StatusBar barStyle='light-content' backgroundColor='#4380FC' />
             <View style={styles.modalStatusBackground} />
             <Animated.View style={[styles.modalHeader, {paddingLeft: this.state.modalAnimHeaderMargin}]}>
             <View style={styles.modalSearchInputContainer}>
@@ -123,11 +174,13 @@ class officehall extends Component {
                 style={styles.modalSearchBar}
                 autoFocus={true}
                 returnKeyType='search'
+                numberOfLines={1}
                 clearButtonMode='while-editing'
                 placeholder='搜索'
                 keyboardType='default'
                 value={searchText}
-                onChangeText={(text) => { this.setState({ searchText: text }); this.searchMatch(searchText, searchDB);}}
+                underlineColorAndroid = 'transparent'
+                onChangeText={(text) => { this.setState({ searchText: text }); this.searchMatch(text, searchDB);}}
                 onEndEditing={()=> console.log('end')}
                 onChange={() => this.searchMatch(searchText, searchDB)}
                 onSubmitEditing={() => { if(searchText != '') {addRecord(searchText)}}}
@@ -135,7 +188,7 @@ class officehall extends Component {
                 <Ionicons name={'ios-search'} size={22} style={{ color: '#939393', position: 'absolute', backgroundColor: 'white', left:10, top: 4, }} />
             </View>
               
-              <TouchableOpacity style={styles.modalCancelBtd} onPress={() => { this.setModalInvisible(); this.setState({ modalAnimHeaderMargin: new Animated.Value(250), modalAnimBodyMargin: new Animated.Value(250) }) }}>
+              <TouchableOpacity style={styles.modalCancelBtd} onPress={() => {  this.setModalInvisible(); this.setState({ modalAnimHeaderMargin: new Animated.Value(250), modalAnimBodyMargin: new Animated.Value(250) }); }}>
                 <Text style={{ color: 'white', fontSize: 16 }}>取消</Text>
               </TouchableOpacity>
             </Animated.View>
@@ -150,7 +203,7 @@ class officehall extends Component {
                   <View style={styles.modalSectionTitle}>
                     <Text style={styles.modalTitleText}>历史搜索</Text>
                     <TouchableOpacity onPress={() => del()}>
-                      <Ionicons name={'md-trash'} size={20} style={{ color: '#4380FC', marginTop: 4, marginLeft: 12 }} />
+                      <Ionicons name={'md-trash'} size={20} style={{ color: '#6999FD', marginTop: 4, marginLeft: 12 }} />
                     </TouchableOpacity>
                   </View>
                   <View style={styles.modalOptionContainer}>
@@ -167,7 +220,7 @@ class officehall extends Component {
                 <View style={styles.modalSectionTitle}>
                   <Text style={styles.modalTitleText}>热门提问</Text>
                   <TouchableOpacity style={{alignItems: 'flex-start' }}>
-                      <Text style={{ color: '#4380FC'}}>更多></Text>
+                      <Text style={{ color: '#6999FD'}}>更多></Text>
                   </TouchableOpacity>
                 </View>
                 <View style={styles.modalQuestionContainer}>
@@ -200,7 +253,7 @@ class officehall extends Component {
                     if(data.name.match(searchText)) {
                       return (
                         <TouchableOpacity style={styles.resultCell} activeOpacity={0.8} onPress={() => { this.props.navigation.navigate(data.linkPage); this.dismissModal() }}>
-                          <Text style={{ color: '#4380FC', fontSize: 24, fontWeight: 'bold' }}>{data.name}</Text>
+                          <Text style={{ color: '#6999FD', fontSize: 24, fontWeight: 'bold' }}>{data.name}</Text>
                           <Text style={{ color: '#9f9f9f' }}>{data.category}</Text>
                         </TouchableOpacity>
                       )
@@ -219,33 +272,14 @@ class officehall extends Component {
       contentContainerStyle={{alignItems: 'center', justifyContent: 'center'}}
       showsVerticalScrollIndicator={false} >
 
-          <TouchableOpacity style={styles.searchBar} activeOpacity={1} onPress={() => { this.setModalAnimType('none'); this.modalSlideIn(); this.setModalVisible(true);}}>
-          <Ionicons name={'ios-search'} size={18} style={{ color: '#dedede', marginTop: 2, marginRight: 6 }} />
-          <Text style={styles.searchText}>搜索</Text>
-        </TouchableOpacity>
-
-          <View style={styles.swipeContainer}>
-            <Swiper style={styles.wrapper}
-              showsButtons={false}
-              showsPagination={true}
-              height={108} width={width - 16}
-              activeDotStyle={{ height: 3, width: 6 }}
-              dotStyle={{ height: 2, width: 4 }}
-              paginationStyle={{ position: 'absolute', bottom: 2 }}
-              removeClippedSubviews={false}>
-              <View style={styles.slide1}>
-                <Image source={require('../../../../app-assets/officehall/banner_1.png')} style={styles.pic} />
-              </View>
-              <View style={styles.slide2}>
-                <Image source={require('../../../../app-assets/officehall/banner_2.png')} style={styles.pic} />
-              </View>
-              <View style={styles.slide3}>
-                <Image source={require('../../../../app-assets/officehall/banner_3.png')} style={styles.pic} />
-              </View>
-            </Swiper>
-          </View> 
-
       <View style={styles.viceContainer}>
+            <TouchableOpacity style={styles.searchBar} activeOpacity={1} onPress={() => { this.setModalVisible(true);  }}>
+              <Ionicons name={'ios-search'} size={18} style={{ color: '#dedede', marginTop: 2, marginRight: 6 }} />
+              <Text style={styles.searchText}>搜索</Text>
+            </TouchableOpacity>
+
+            {swiper}
+
           <TouchableOpacity style={styles.detailContainer} activeOpacity={0.8}>
             <Text style={styles.header}>出入境业务</Text>
             <View style={styles.indicatorContainer}>
@@ -294,8 +328,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#999999',
     height: 34,
-    marginBottom: 12,
-    marginTop: 12,
     width: width - 16,
     borderRadius: 15,
     backgroundColor: '#FFFFFF',
@@ -395,7 +427,7 @@ const styles = StyleSheet.create({
     height: 15,
     width: 15,
     borderRadius: 7.5,
-    backgroundColor: '#4380FC'
+    backgroundColor: '#6999FD'
   },
   indicatorCell: {
     borderWidth: WIDTH,
@@ -427,10 +459,9 @@ const styles = StyleSheet.create({
   viceContainer: {
     borderColor: 'blue',
     borderWidth: WIDTH,
-    height: scrollheight-285,
+    height: scrollheight-115,
+    marginTop: 10,
     justifyContent: 'space-around',
-    paddingBottom:20,
-    paddingTop: 20,
   },
   modalContainer: {
     flex: 1,
@@ -452,7 +483,10 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor:'white',
     paddingLeft: 33,
-    paddingTop: 1.5,
+    paddingTop: 0,
+    paddingBottom: 0,
+    alignItems: 'center',
+
   },
   modalStatusBackground:{
     height: 20,
@@ -496,7 +530,7 @@ const styles = StyleSheet.create({
   },
   modalTitleText: {
     width: 300,
-    color:'#4380FC',
+    color:'#6999FD',
     fontSize: 16,
     textAlign: 'left',
     borderColor: 'orange',
@@ -545,6 +579,7 @@ const styles = StyleSheet.create({
     borderWidth: WIDTH,
     borderColor: 'black',
     width: width - 16,
+    height: 108,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 0.2 },
     shadowOpacity: 0.4,

@@ -5,7 +5,7 @@
  */
 
 import React, { Component } from 'react'
-import { Platform, StyleSheet, Text, View, StatusBar } from 'react-native'
+import { Platform, StyleSheet, Text, View, StatusBar, Dimensions } from 'react-native'
 
 import { StackNavigator, TabNavigator } from 'react-navigation'
 import Ionicons from 'react-native-vector-icons/Ionicons'
@@ -15,9 +15,10 @@ import Mine from './src/components/pages/mine/mine'
 import Officehall from './src/components/pages/officehall/officehall'
 import Error from './src/components/pages/error'
 import Abroad from './src/components/pages/officehall/business/abroad'
-import Appointment from './src/components/pages/appointment/appointment'
+import Info from './src/components/pages/appointment/info'
+import Input from './src/components/pages/appointment/input'
 
-let TABSTATE = '任务'
+let TABSTATE = '办事大厅'
 let HEADER_INVISIBLE = true
 
 function changeTabTitle (op) {
@@ -71,7 +72,7 @@ const Maintab = TabNavigator({
     navigationOptions: {
       tabBarLabel: '任务',
       tabBarIcon: ({ tintColor, focused }) => (
-        <Ionicons name={focused ? 'ios-list-box' : 'ios-list-box-outline'} size={26} style={focused ? { color: '#4380FC' } : {color: '#7b7b7d'}} />
+        <Ionicons name={focused ? 'ios-list-box' : 'ios-list-box-outline'} size={26} style={focused ? { color: '#6999FD' } : {color: '#7b7b7d'}} />
       ),
       labelStyle: {
         fontSize: 20
@@ -87,7 +88,7 @@ const Maintab = TabNavigator({
     navigationOptions: {
       tabBarLabel: '办事大厅',
       tabBarIcon: ({ tintColor, focused }) => (
-        <Ionicons name={focused ? 'ios-list-box' : 'ios-list-box-outline'} size={26} style={focused ? { color: '#4380FC' } : {color: '#7b7b7d'}} />
+        <Ionicons name={focused ? 'ios-list-box' : 'ios-list-box-outline'} size={26} style={focused ? { color: '#6999FD' } : {color: '#7b7b7d'}} />
       ),
       labelStyle: {
         fontSize: 20
@@ -104,7 +105,7 @@ const Maintab = TabNavigator({
     navigationOptions: {
       tabBarLabel: '我的',
       tabBarIcon: ({ tintColor, focused }) => (
-        <Ionicons name={focused ? 'ios-person' : 'ios-person-outline'} size={26}  style={focused ? { color: '#4380FC' } : {color: '#7b7b7d'}}/>
+        <Ionicons name={focused ? 'ios-person' : 'ios-person-outline'} size={26}  style={focused ? { color: '#6999FD' } : {color: '#7b7b7d'}}/>
       ),
       tabBarOnPress: ({scene, jumpToIndex}) => {
         changeTabTitle(3)
@@ -116,12 +117,24 @@ const Maintab = TabNavigator({
   tabBarOptions: {
     labelStyle: {
       fontSize: 13,
-      paddingBottom: 2
+      paddingBottom: 2,
+      margin: 0, 
     },
-  activeTintColor: '#4380FC',
-  inactiveTintColor: '#7b7b7d',
+    indicatorStyle: {
+      height: 0,
+    },
+    showIcon: true,
+    activeTintColor: '#6999FD',
+    inactiveTintColor: '#7b7b7d',
+    style: {
+      backgroundColor: '#f5f5f5',
+      paddingBottom: 0,
+    }
 },
+    swipeEnabled: false, 
     initialRouteName: 'Officehall',
+    tabBarPosition: 'bottom',
+    
 })
 
 const Main = StackNavigator({
@@ -134,11 +147,13 @@ const Main = StackNavigator({
           headerMode: 'none',
           headerTintColor: 'white',
           headerStyle: {
-            backgroundColor: '#4380FC'
+            backgroundColor: '#4380FC',
+            elevation: 0,
           },
+          
           headerBackTitle: null,
           headerTitleStyle: {
-            fontSize: 24
+            fontSize: 24,
           }
         }
       } else {
@@ -155,11 +170,13 @@ const Main = StackNavigator({
         title: '此路不通',
         headerTintColor: 'white',
         headerStyle: {
-          backgroundColor: '#4380FC', borderBottomWidth: 0
+          backgroundColor: '#4380FC',
+          borderBottomWidth: 0,
+          elevation: 0,
         },
         headerBackTitle: null,
         headerTitleStyle: {
-          fontSize: 24
+          fontSize: 24,
         }
       }
     }
@@ -171,31 +188,75 @@ const Main = StackNavigator({
         title: '出入境业务',
         headerTintColor: 'white',
         headerStyle: {
-          backgroundColor: '#4380FC', borderBottomWidth: 0
+          backgroundColor: '#4380FC', 
+          borderBottomWidth: 0,
+          elevation: 0,
         },
         headerBackTitle: null,
         headerTitleStyle: {
-          fontSize: 24
+          fontSize: 24,
         }
       }
     }
   },
-  appointment: {
-    screen: Appointment,
+  info: {
+    screen: Info,
     navigationOptions: ({ navigation }) => {
       return {
-        title: '广州户籍预约',
+        title: '资料准备',
         headerTintColor: 'white',
         headerStyle: {
-          backgroundColor: '#4380FC', borderBottomWidth: 0
+          elevation: 0,
+          backgroundColor: '#4380FC',
+          borderBottomWidth: 0,
         },
         headerBackTitle: null,
         headerTitleStyle: {
-          fontSize: 24
+          fontSize: 24,
+        }
+      }
+    }
+  },
+  input: {
+    screen: Input,
+    navigationOptions: ({ navigation }) => {
+      return {
+        title: '资料填写',
+        headerTintColor: 'white',
+        headerStyle: {
+          elevation: 0,
+          backgroundColor: '#4380FC',
+          borderBottomWidth: 0,
+        },
+        headerBackTitle: null,
+        headerTitleStyle: {
+          fontSize: 24,
         }
       }
     }
   }
+},{
+    headerMode: 'float',
+    mode: 'card',
+    
+    transitionConfig: () => (Platform.OS == 'ios'? {}:{
+      screenInterpolator: sceneProps => {
+        const { layout, position, scene } = sceneProps;
+        const { index } = scene;
+
+        const translateX = position.interpolate({
+          inputRange: [index - 1, index, index + 1],
+          outputRange: [layout.initWidth, 0, 0]
+        });
+
+        const opacity = position.interpolate({
+          inputRange: [index - 1, index - 0.99, index, index + 0.99, index + 1],
+          outputRange: [0, 1, 1, 0.3, 0]
+        });
+
+        return { opacity, transform: [{ translateX }] }
+      }
+    }),
 })
 
 export default class App extends Component {
@@ -203,7 +264,7 @@ export default class App extends Component {
   render () {
     return (
       <View style={styles.container}>
-        <StatusBar barStyle='light-content' />
+        <StatusBar barStyle='light-content' backgroundColor='#4380FC' />
         <Main />
       </View>
     )

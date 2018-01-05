@@ -1,6 +1,9 @@
 package com.noworry;
 
 import com.facebook.react.ReactActivity;
+import com.facebook.react.ReactPackage;
+import com.facebook.react.shell.MainReactPackage;
+
 
 public class MainActivity extends ReactActivity {
 
@@ -13,4 +16,6 @@ public class MainActivity extends ReactActivity {
     protected String getMainComponentName() {
         return "noworry";
     }
+
+    
 }

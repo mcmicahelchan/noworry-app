@@ -13,14 +13,14 @@ export default function fileCell(props) {
     return (
         <View style={styles.fileCell}>
             <View style={styles.fileHeaderContainer}>
-                <Text style={{ color: '#B0B0B0', fontWeight: 'bold' }}>·  {title}  ·</Text>
+                <Text style={{ color: '#B0B0B0', fontWeight: 'bold', fontSize: 16 }}>·  {title}  ·</Text>
             </View>
             <View style={styles.fileBodyContainer}>
                 {item.map((data, index) => {
                     return (
-                        <View style={styles.fileItemContainer}>
-                            <View style={{ width: 6, height: 6, borderRadius: 3, backgroundColor: '#4380FC', marginRight: 10 }} />
-                            <Text style={{ fontWeight: 'bold' }}>{data}</Text>
+                        <View key={index} style={styles.fileItemContainer}>
+                            <View style={{ width: 6, height: 6, borderRadius: 3, backgroundColor: '#6999FD', marginRight: 10 }} />
+                            <Text style={{ fontWeight: 'bold', fontSize: 16, color: 'black' }}>{data}</Text>
                         </View>
                     )
                 })}

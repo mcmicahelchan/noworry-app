@@ -17,15 +17,15 @@ export default function questionCell(props) {
 
 const styles = StyleSheet.create({
     question: {
-        height: 41,
-        lineHeight: 41,
         borderColor: '#f3f3f3',
-        borderBottomWidth: 0.8,
-        color: '#878787',
+        
+
     },
     qustionCell: {
         borderColor: '#f3f3f3',
         borderBottomWidth: 1,
+        height: 41,
+        justifyContent: 'center',
     }
 
 })
