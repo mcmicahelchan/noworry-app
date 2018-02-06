@@ -14,16 +14,23 @@ import Dashboard from './src/components/pages/dashboard/dashboard'
 import Mine from './src/components/pages/mine/mine'
 import Officehall from './src/components/pages/officehall/officehall'
 import Error from './src/components/pages/error'
+import Nodash from './src/components/pages/nodash'
 import Abroad from './src/components/pages/officehall/business/abroad'
 import Info from './src/components/pages/appointment/info'
 import Input from './src/components/pages/appointment/input'
+import Location from './src/components/pages/appointment/location'
+import Calendar from './src/components/pages/appointment/calendar'
+import Confirm from './src/components/pages/appointment/confirm'
+import PersonalInfo from './src/components/pages/mine/personalInfo'
+import MyCards from './src/components/pages/mine/myCards'
+import Robot from './src/components/pages/robot/robotChat'
 
 let TABSTATE = '办事大厅'
 let HEADER_INVISIBLE = true
 
 function changeTabTitle (op) {
   if (op == 1) {
-    TABSTATE = '任务'
+    TABSTATE = '我的业务'
     HEADER_INVISIBLE = true
   } else {
     if (op == 2) {
@@ -70,7 +77,7 @@ const Maintab = TabNavigator({
   Dashboard: {
     screen: Dashboard,
     navigationOptions: {
-      tabBarLabel: '任务',
+      tabBarLabel: '我的业务',
       tabBarIcon: ({ tintColor, focused }) => (
         <Ionicons name={focused ? 'ios-list-box' : 'ios-list-box-outline'} size={26} style={focused ? { color: '#6999FD' } : {color: '#7b7b7d'}} />
       ),
@@ -88,7 +95,7 @@ const Maintab = TabNavigator({
     navigationOptions: {
       tabBarLabel: '办事大厅',
       tabBarIcon: ({ tintColor, focused }) => (
-        <Ionicons name={focused ? 'ios-list-box' : 'ios-list-box-outline'} size={26} style={focused ? { color: '#6999FD' } : {color: '#7b7b7d'}} />
+        <Ionicons name={focused ? 'ios-home' : 'ios-home-outline'} size={26} style={focused ? { color: '#6999FD' } : {color: '#7b7b7d'}} />
       ),
       labelStyle: {
         fontSize: 20
@@ -203,7 +210,7 @@ const Main = StackNavigator({
     screen: Info,
     navigationOptions: ({ navigation }) => {
       return {
-        title: '资料准备',
+        title: '业务预约',
         headerTintColor: 'white',
         headerStyle: {
           elevation: 0,
@@ -221,7 +228,7 @@ const Main = StackNavigator({
     screen: Input,
     navigationOptions: ({ navigation }) => {
       return {
-        title: '资料填写',
+        title: '业务预约',
         headerTintColor: 'white',
         headerStyle: {
           elevation: 0,
@@ -234,7 +241,115 @@ const Main = StackNavigator({
         }
       }
     }
-  }
+  },
+  location: {
+    screen: Location,
+    navigationOptions: ({ navigation }) => {
+      return {
+        title: '业务预约',
+        headerTintColor: 'white',
+        headerStyle: {
+          elevation: 0,
+          backgroundColor: '#4380FC',
+          borderBottomWidth: 0,
+        },
+        headerBackTitle: null,
+        headerTitleStyle: {
+          fontSize: 24,
+        }
+      }
+    }
+  },
+  calendar: {
+    screen: Calendar,
+    navigationOptions: ({ navigation }) => {
+      return {
+        title: '业务预约',
+        headerTintColor: 'white',
+        headerStyle: {
+          elevation: 0,
+          backgroundColor: '#4380FC',
+          borderBottomWidth: 0,
+        },
+        headerBackTitle: null,
+        headerTitleStyle: {
+          fontSize: 24,
+        }
+      }
+    }
+  },
+  confirm: {
+    screen: Confirm,
+    navigationOptions: ({ navigation }) => {
+      return {
+        title: '业务预约',
+        headerTintColor: 'white',
+        headerStyle: {
+          elevation: 0,
+          backgroundColor: '#4380FC',
+          borderBottomWidth: 0,
+        },
+        headerBackTitle: null,
+        headerTitleStyle: {
+          fontSize: 24,
+        }
+      }
+    }
+  },
+  personalInfo: {
+    screen: PersonalInfo,
+    navigationOptions: ({ navigation }) => {
+      return {
+        title: '个人信息库',
+        headerTintColor: 'white',
+        headerStyle: {
+          elevation: 0,
+          backgroundColor: '#4380FC',
+          borderBottomWidth: 0,
+        },
+        headerBackTitle: null,
+        headerTitleStyle: {
+          fontSize: 24,
+        }
+      }
+    }
+  },
+  myCards: {
+    screen: MyCards,
+    navigationOptions: ({ navigation }) => {
+      return {
+        title: '我的证件',
+        headerTintColor: 'white',
+        headerStyle: {
+          elevation: 0,
+          backgroundColor: '#4380FC',
+          borderBottomWidth: 0,
+        },
+        headerBackTitle: null,
+        headerTitleStyle: {
+          fontSize: 24,
+        }
+      }
+    }
+  },
+  robot: {
+    screen: Robot,
+    navigationOptions: ({ navigation }) => {
+      return {
+        title: '智能客服',
+        headerTintColor: 'white',
+        headerStyle: {
+          elevation: 0,
+          backgroundColor: '#4380FC',
+          borderBottomWidth: 0,
+        },
+        headerBackTitle: null,
+        headerTitleStyle: {
+          fontSize: 24,
+        }
+      }
+    }
+  },
 },{
     headerMode: 'float',
     mode: 'card',

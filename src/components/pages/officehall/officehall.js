@@ -21,9 +21,19 @@ const WIDTH = 0
 const SWIPER_HEIGHT = 108
 const { height, width } = Dimensions.get('window');
 console.log(height)
-let scrollheight = height==568 ? height+340 : height
+let scrollheight = height==558 ? height+340 : height
 
 class officehall extends Component {
+  
+  static navigationOptions = ({ navigation }) => {
+    console.log(navigation)
+    return {
+      headerLeft: <TouchableOpacity onPress={() => navigation.navigate('robot')} style={{ borderColor: 'red', borderWidth: WIDTH, width: 60, height: 44, justifyContent: 'center', alignItems: 'center' }}>
+        <Image source={require('../../../../app-assets/icon-service.png')} />
+      </TouchableOpacity>,
+    }
+  }
+  
   constructor () {
     super()
     this.state = {
@@ -134,6 +144,7 @@ class officehall extends Component {
       swiper = <View style={[styles.swipeContainer, ]}>
         <Swiper style={styles.wrapper}
           showsButtons={false}
+          autoplay={true}
           showsPagination={true}
           height={108} width={width - 16}
           activeDotStyle={{ height: 3, width: 6 }}
@@ -298,10 +309,10 @@ class officehall extends Component {
               <Text style={styles.draftboxHeaderText}>业务选择</Text>
             </View>
             <View style={styles.businessContainer}>
-              <Option style={styles.option} navigation={this.props.navigation} businessType='交管业务' icon='md-car' linkPage='error' />
+              <Option style={styles.option} navigation={this.props.navigation} businessType='交管业务' icon='md-car' linkPage='abroad' />
               <Option style={styles.option} navigation={this.props.navigation} businessType='出入境业务' icon='md-globe' linkPage='abroad' />
-              <Option style={styles.option} navigation={this.props.navigation} businessType='户政业务' icon='md-card' linkPage='error' />
-              <Option style={styles.option} navigation={this.props.navigation} businessType='监管业务' icon='md-eye' linkPage='error' />
+              <Option style={styles.option} navigation={this.props.navigation} businessType='户政业务' icon='md-card' linkPage='abroad' />
+                <Option style={styles.option} navigation={this.props.navigation} businessType='监管业务' icon='md-eye' linkPage='abroad' />
             </View>
           </View>
       </View>
@@ -459,7 +470,7 @@ const styles = StyleSheet.create({
   viceContainer: {
     borderColor: 'blue',
     borderWidth: WIDTH,
-    height: scrollheight-115,
+    height: Platform.OS == 'ios' ? scrollheight - 125 : scrollheight - 155,
     marginTop: 10,
     justifyContent: 'space-around',
   },

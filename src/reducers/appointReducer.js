@@ -1,4 +1,4 @@
-const initState = {familyName:'陈', firstName: '', id:'440104192212024231', phone: '', add:'广东省广州市海珠区广雅路12幢148房', bdp:'中山', gender:'男', utype: '在职'}
+const initState = {familyName:'陈', firstName: '', id:'440104192212024231', phone: '', add:'广东省广州市海珠区广雅路12幢148房', bdp:'中山', gender:'男', utype: ''}
 
 export default function reducer(state=initState, action) {
     switch(action.type){

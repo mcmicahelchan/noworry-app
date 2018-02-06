@@ -27,19 +27,19 @@ const backAction = NavigationActions.back({
 
 class input extends Component {
     
-    
-
-    
     static navigationOptions = ({ navigation }) => {
         const { goBack } = navigation
         console.log(navigation)
         return {
             title: '大家好',
-            headerLeft: <TouchableOpacity onPress={() => { console.log('hi'); navigation.goBack(navigation.state.params.goBackKey) }} style={{  marginLeft: 10 }}>
+            headerLeft: <TouchableOpacity onPress={() => { console.log('hi'); navigation.goBack(navigation.state.params.goBackKey) }} style={{ marginLeft: 10 }}>
                 <Ionicons name={'ios-arrow-back'} size={30} style={{ color: 'white', marginLeft: 10, marginRight: 10 }} />
             </TouchableOpacity>,
         }
     }
+
+    
+
     
     constructor() {
         super()
@@ -121,7 +121,7 @@ class input extends Component {
     jumpToNextPage() {
         console.log(this.state.canJump)
         if (this.state.canJump) {
-            this.props.navigation.navigate('error')
+            this.props.navigation.navigate('location', { goBackKey: this.props.navigation.state.params.goBackKey })
         } else {
             this.setState({
                 toJudegeNull: true
@@ -250,7 +250,7 @@ class input extends Component {
                                 <InputBox null={this.state.toJudegeNull} placeholder='身份证号' width={221} setValue={(a, b) => this._setValue(a, b)} value={this.props.info.id} />
                             </View>
                             <View style={styles.inputSection}>
-                                <Text style={{ color: '#CCCCCC', marginLeft: 4, marginBottom: 6 }}>用户类型</Text>
+                                <Text style={{ color: '#CCCCCC', marginLeft: 4, marginBottom: 6 }}>身份</Text>
                                 <Dropdown
                                     animationDuration={0}
                                     data={userTypeOption}
@@ -258,7 +258,7 @@ class input extends Component {
                                     labelHeight={0}
                                     fontSize={18}
                                     pickerStyle={{}}
-                                    value={this.props.info.utype == '' ? '请选择您的性别' : this.props.info.utype}
+                                    value={this.props.info.utype == '' ? '请选择您的身份' : this.props.info.utype}
                                     rippleInsets={{ top: 0, bottom: 0}}
                                     onChangeText={(value, index, data) => {this.props.addUType(value)}}
                                 />
@@ -429,8 +429,8 @@ const styles = StyleSheet.create({
     shadowContainer: {
         flex: 1,
         shadowColor: '#000',
-        shadowOffset: { width: 10, height: 10 },
-        shadowOpacity: 0.4,
+        shadowOffset: { width: 5, height: 5 },
+        shadowOpacity: 0.2,
         shadowRadius: 2,
         elevation: 1,
         borderRadius: 10,

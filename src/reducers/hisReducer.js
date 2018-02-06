@@ -1,4 +1,4 @@
-const initState = [{name: '车管所', linkPage: 'error'}, {name: '护照', linkPage: 'error'}, {name: '交通银行', linkPage: 'error'}, {name: '冰芒果水晶', linkPage: 'error'}]
+const initState = [{name: '车管所', linkPage: 'error'}, {name: '护照', linkPage: 'error'}, {name: '交通银行', linkPage: 'error'}, {name: '港澳通行证', linkPage: 'info'}]
 
 export default function reducer(state=initState, action) {
     switch(action.type){

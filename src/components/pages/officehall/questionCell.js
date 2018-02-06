@@ -10,7 +10,7 @@ export default function questionCell(props) {
     const { question, navigation, linkPage, style, num, dismissModal } = props
     return (
         <TouchableOpacity style={[styles.qustionCell, style]} onPress={() => { dismissModal(); navigation.navigate(linkPage) }}>
-            <Text style={styles.question}>{num}. {question}</Text>
+            <Text style={styles.question}><Text style={{ color: '#6999FD'}}>{num}.</Text> {question}</Text>
         </TouchableOpacity>
     )
 }
@@ -18,7 +18,7 @@ export default function questionCell(props) {
 const styles = StyleSheet.create({
     question: {
         borderColor: '#f3f3f3',
-        
+        fontSize: 16,
 
     },
     qustionCell: {

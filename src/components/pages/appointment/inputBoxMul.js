@@ -91,6 +91,9 @@ export default class inputBoxMul extends Component {
                     }
                     break
                 }
+                case '家庭住址': {
+                    this.props.setValue('add', this.state.text)
+                }
             }
         } else {
             this.setState({
@@ -115,6 +118,10 @@ export default class inputBoxMul extends Component {
                 }
                 case '出生地': {
                     this.props.setValue('bdp', this.state.text)
+                    break
+                }
+                case '家庭住址': {
+                    this.props.setValue('add', this.state.text)
                     break
                 }
             }

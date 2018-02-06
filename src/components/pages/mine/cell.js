@@ -11,7 +11,7 @@ export default function cell (props) {
   cellInsideContainer = isLast ? styles.cellInsideContainerWithoutBottom : styles.cellInsideContainer
 
   return (
-    <TouchableOpacity style={styles.cell} onPress={() => navigation.navigate(linkPage)} activeOpacity={0.7}>
+    <TouchableOpacity style={styles.cell} onPress={() => navigation.navigate(linkPage)} activeOpacity={0.8}>
       <View style={cellInsideContainer}>
         <View style={styles.iconContainer}>
           <Ionicons name={icon} size={26} style={{ color: iconColor }} />
@@ -20,7 +20,7 @@ export default function cell (props) {
           {title}
         </Text>
         <View style={styles.forwardContainer}>
-          <Ionicons name={'ios-arrow-forward'} size={22} style={{ color: '#dedede' }} />
+          <Ionicons name={'ios-arrow-forward'} size={22} style={{ color: '#dedede', backgroundColor: 'white' }} />
         </View>
       </View>
     </TouchableOpacity>
@@ -31,9 +31,12 @@ const styles = StyleSheet.create({
   cell: {
     borderColor: 'yellow',
     borderWidth: WIDTH,
-    height: 44,
+    height: 57,
     backgroundColor: '#FFFFFF',
-    flexDirection: 'row'
+    flexDirection: 'row',
+    marginBottom: 2,
+    marginTop: 2,
+
   },
   forwardContainer: {
     borderColor: 'black',
@@ -42,7 +45,8 @@ const styles = StyleSheet.create({
     flex: 1,
     marginRight: 20,
     justifyContent: 'flex-end',
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundColor: '#FFFFFF'
   },
   cellInsideContainer: {
     borderColor: '#dedede',
@@ -50,24 +54,28 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0.3,
     flexDirection: 'row',
     alignItems: 'center',
-    marginLeft: 20
+    marginLeft: 20,
+    backgroundColor:'#FFFFFF'
   },
   cellInsideContainerWithoutBottom: {
     flex: 1,
     borderBottomWidth: 0,
     flexDirection: 'row',
     alignItems: 'center',
-    marginLeft: 20
+    marginLeft: 20,
+    backgroundColor: '#FFFFFF'
   },
   cellText: {
     marginLeft: 10,
-    fontSize: 18,
+    fontSize: 19,
+    color: '#677385'
   },
   iconContainer: {
     borderColor: 'black',
     borderWidth: WIDTH,
     width: 30,
     paddingLeft: 2,
+    backgroundColor: '#FFFFFF'
   }
 
 })

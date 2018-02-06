@@ -12,6 +12,8 @@ const WIDTH = 0
 
 
 class mine extends Component {
+  
+  
   constructor () {
     super()
     this.state = {
@@ -37,23 +39,16 @@ class mine extends Component {
               </Text>
             </View>
           </View>
-          <TouchableOpacity style={styles.btdContainer} onPress={() => modify('可爱猪', '1234567890')}>
-            <Ionicons name={'md-create'} size={26} style={{ color: 'white' }} />
-          </TouchableOpacity>
         </View>
 
-        <View style={styles.cellsContainer}>
-            <Cell navigation={this.props.navigation}  title='个人信息库' icon='md-person' iconColor='#ffcc00' linkPage='error' isLast={true} />
+        <View style={[styles.cellsContainer]}>
+          <Cell navigation={this.props.navigation} title='个人信息库' icon='md-person' iconColor='#66c2fd' linkPage='personalInfo' isLast={false} />
+          <Cell navigation={this.props.navigation} title='我的证件' icon='md-card' iconColor='#ff7e6b' linkPage='myCards' isLast={false} />
+          <Cell navigation={this.props.navigation} title='浏览记录' icon='md-time' iconColor='#f1e04c' linkPage='error' isLast={true} />
         </View>
         <View style={styles.cellsContainer}>
-            <Cell navigation={this.props.navigation}  title='我的草稿箱' icon='md-document' iconColor='#6999FD' linkPage='error' isLast={false} />
-            <Cell navigation={this.props.navigation}  title='我的办理历史' icon='md-time' iconColor='#6999FD' linkPage='error' isLast={true} />
-        </View>
-        <View style={styles.cellsContainer}>
-            <Cell navigation={this.props.navigation}  title='设置' icon='md-cog' iconColor='#aaaaaa' linkPage='error' isLast={true} />
-        </View>
-         <View style={styles.cellsContainer}>
-            <Cell navigation={this.props.navigation}  title='关于App' icon='md-alert' iconColor='#6999FD' linkPage='error' isLast={true} />
+          <Cell navigation={this.props.navigation} title='使用帮助' icon='md-help-circle' iconColor='#4cdb7d' linkPage='error' isLast={false} />
+          <Cell navigation={this.props.navigation} title='设置' icon='md-cog' iconColor='#aa86fc' linkPage='error' isLast={true} />
         </View>
       </View>
     )
@@ -65,7 +60,7 @@ const styles = StyleSheet.create({
     borderColor: 'red',
     borderWidth: WIDTH,
     flex: 1,
-    backgroundColor: '#fafafa',
+    backgroundColor: '#FFFFFF',
   },
   headerInfo: {
     borderColor: 'green',
@@ -107,7 +102,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    paddingLeft: 40
+    paddingLeft: 40,
   },
   infoText: {
     borderColor: 'yellow',
@@ -116,9 +111,10 @@ const styles = StyleSheet.create({
   },
   cellsContainer: {
     borderColor: '#dedede',
-    borderWidth: 0.5,
+    borderWidth: 1,
     marginBottom: 20,
     paddingBottom: 1,
+    backgroundColor: '#FFFFFF'
   },
 
 })

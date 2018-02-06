@@ -25,19 +25,19 @@ export default class abroad extends Component {
             <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
                 <BtdSection sectionName='业务办理'>
                     <BusinessBtd navigation={this.props.navigation} businessType='广州市户籍预约' icon='md-baseball' linkPage='info' line={true} goBackKey={this.props.navigation.state.key} />
-                    <BusinessBtd navigation={this.props.navigation} businessType='广州市户籍预约' icon='md-baseball' linkPage='error' line={true} />
-                    <BusinessBtd navigation={this.props.navigation} businessType='广州市户籍预约' icon='md-baseball' linkPage='error' line={false} />
+                    <BusinessBtd navigation={this.props.navigation} businessType='广州市户籍预约' icon='md-baseball' linkPage='info' line={true} goBackKey={this.props.navigation.state.key} />
+                    <BusinessBtd navigation={this.props.navigation} businessType='广州市户籍预约' icon='md-baseball' linkPage='info' line={true} goBackKey={this.props.navigation.state.key} />
                 </BtdSection>
                 <BtdSection sectionName='业务查询'>
-                    <BusinessBtd navigation={this.props.navigation} businessType='支付方式查询' icon='md-car' linkPage='error' line={true}/>
-                    <BusinessBtd navigation={this.props.navigation} businessType='支付方式查询' icon='md-car' linkPage='error' line={true} />
-                    <BusinessBtd navigation={this.props.navigation} businessType='支付方式查询' icon='md-car' linkPage='error' line={false} />
-                    <BusinessBtd navigation={this.props.navigation} businessType='支付方式查询' icon='md-car' linkPage='error' line={true} />
+                    <BusinessBtd navigation={this.props.navigation} businessType='支付方式查询' icon='md-car' linkPage='info' line={true} goBackKey={this.props.navigation.state.key}/>
+                    <BusinessBtd navigation={this.props.navigation} businessType='支付方式查询' icon='md-car' linkPage='info' line={true} goBackKey={this.props.navigation.state.key}/>
+                    <BusinessBtd navigation={this.props.navigation} businessType='支付方式查询' icon='md-car' linkPage='info' line={true} goBackKey={this.props.navigation.state.key} />
+                    <BusinessBtd navigation={this.props.navigation} businessType='支付方式查询' icon='md-car' linkPage='info' line={true} goBackKey={this.props.navigation.state.key} />
                 </BtdSection>
                 <BtdSection sectionName='业务预约'>
-                    <BusinessBtd navigation={this.props.navigation} businessType='广州市户籍预约' icon='md-baseball' linkPage='error' line={true} />
-                    <BusinessBtd navigation={this.props.navigation} businessType='广州市户籍预约' icon='md-baseball' linkPage='error' line={true} />
-                    <BusinessBtd navigation={this.props.navigation} businessType='广州市户籍预约' icon='md-baseball' linkPage='error' line={false} />
+                    <BusinessBtd navigation={this.props.navigation} businessType='广州市户籍预约' icon='md-baseball' linkPage='info' line={true} goBackKey={this.props.navigation.state.key}/>
+                    <BusinessBtd navigation={this.props.navigation} businessType='广州市户籍预约' icon='md-baseball' linkPage='info' line={true} goBackKey={this.props.navigation.state.key} />
+                    <BusinessBtd navigation={this.props.navigation} businessType='广州市户籍预约' icon='md-baseball' linkPage='info' line={true} goBackKey={this.props.navigation.state.key} />
                 </BtdSection>
            </ScrollView>
         )

@@ -5,6 +5,7 @@ import his from './hisReducer'
 import searchQs from './searchQsReducer'
 import searchDB from './searchDataBaseReducer'
 import appoint from './appointReducer'
+import dash from './dashReducer.js'
 
 export default combineReducers({
     user,
@@ -12,4 +13,5 @@ export default combineReducers({
     searchQs,
     searchDB,
     appoint,
+    dash,
 })
